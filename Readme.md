@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Кирилл Тертунов](https://up.htmlacademy.ru/ecmascript/10/user/991329).
-* Наставник: [Евгений Фаллер](https://up.htmlacademy.ru/ecmascript/10/user/505933).
+* Наставник: 
 
 ---
 
