@@ -1,4 +1,4 @@
-// import {createDetailInfoTemplate} from './components/detail.js';
+import {createDetailInfoTemplate} from './components/detail.js';
 import {createUserRankTemplate} from './components/user-rank.js';
 import {createNavigationTemplate} from './components/navigation.js';
 import {createFiltersTemplate} from './components/filter.js';
@@ -56,5 +56,5 @@ ratedContainerElements.forEach(
     }
 );
 
-// const bodyElement = document.querySelector(`body`);
-// render(bodyElement, createDetailInfoTemplate(), `beforeend`);
+const bodyElement = document.querySelector(`body`);
+render(bodyElement, createDetailInfoTemplate(), `beforeend`);
