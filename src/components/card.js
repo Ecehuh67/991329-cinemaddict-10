@@ -17,3 +17,17 @@ export const createFilmCardTempalate = () => {
     </form>
   </article>`;
 };
+
+
+import {getRandomArrayItem, getRandomArray} from './mocks/util.js';
+import {filmsList, postersList, descriptionsOfFilm} from './mocks/const.js';
+
+const cardOfFilm = () => {
+  const randomLengthArray = getRandomArray(descriptionsOfFilm);
+
+  return {
+    title: getRandomArrayItem(filmsList),
+    poster: getRandomArrayItem(postersList),
+    description: descriptionsOfFilm.slice(randomLengthArray[0], randomLengthArray[1])
+  };
+};
