@@ -4,6 +4,7 @@ import {createNavigationTemplate} from './components/navigation.js';
 import {createFiltersTemplate} from './components/filter.js';
 import {createFilmsPosterTemplate} from './components/poster.js';
 import {createFilmCardTempalate} from './components/card.js';
+import {generateCards} from './mocks/card.js';
 import {createShowButtonTemplate} from './components/show-more-button.js';
 import {createTopRatedTemplate} from './components/top-rated.js';
 import {createMostCommentedTemplate} from './components/most-comment.js';
@@ -40,8 +41,11 @@ const filmsContainerElement = mainElement.querySelector(`.films`);
 render(filmsContainerElement, createFilmsPosterTemplate(), `beforeend`);
 
 const filmsPosterElement = filmsContainerElement.querySelector(`.films-list__container`);
+const cards = generateCards(FILM_COUNT);
+console.log(cards);
+cards.forEach((card) => render(filmsPosterElement, createFilmCardTempalate(card), `beforeend`));
 
-fillContainer(FILM_COUNT, filmsPosterElement, createFilmCardTempalate(), `beforeend`);
+//fillContainer(FILM_COUNT, filmsPosterElement, createFilmCardTempalate(), `beforeend`);
 
 const filmsWrapperElement = filmsContainerElement.querySelector(`.films-list`);
 render(filmsWrapperElement, createShowButtonTemplate(), `beforeend`);

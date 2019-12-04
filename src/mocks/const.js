@@ -24,3 +24,5 @@ export const postersList = [
   `./images/posters/the-great-flamarion.jpg`,
   `./images/posters/the-man-with-the-golden-arm.jpg`
 ];
+
+export const genres = [`Musical`, `Documental`, `Action`, `Horror`, `Drama`, `Comedy`];
