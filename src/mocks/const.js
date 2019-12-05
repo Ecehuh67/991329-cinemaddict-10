@@ -26,3 +26,9 @@ export const postersList = [
 ];
 
 export const genres = [`Musical`, `Documental`, `Action`, `Horror`, `Drama`, `Comedy`];
+
+export const ranks = {
+  10: `beginner`,
+  30: `cineman`,
+  80: `movie buff`
+};

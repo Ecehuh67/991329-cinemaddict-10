@@ -28,7 +28,19 @@ export const getTime = () => {
   return `${getHours()}h ${getMinutes()}m`;
 };
 
-export const getCommentsAmount = () => {
-  const num = getRandomNumber(10);
-  return `${num} ${num === 1 ? `comment` : `comments`}`;
+// What way Can I sent key of object like paramets of function to not use the same functions below??
+export const getTopRatedFilms = (cards, amount) => {
+  const values = cards.map((card) => card.rate).sort((a, b) => a - b).slice(-amount);
+  const newCards = cards.filter((card) => {
+    return values.find((it) => it === card.rate);
+  });
+  return newCards;
+};
+
+export const getMostCommentedFilms = (cards, amount) => {
+  const values = cards.map((card) => card.comments).sort((a, b) => a - b).slice(-amount);
+  const newCards = cards.filter((card) => {
+    return values.find((it) => it === card.comments);
+  });
+  return newCards;
 };
