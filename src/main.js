@@ -6,7 +6,7 @@ import {createFilmsPosterTemplate} from './components/poster.js';
 import {createFilmCardTempalate} from './components/card.js';
 import {generateCards} from './mocks/card.js';
 import {generateFilters} from './mocks/filter.js';
-import {getRandomNumber, getTopRatedFilms, getMostCommentedFilms} from './mocks/util.js';
+import {getRandomNumber, getConditionFilms} from './mocks/util.js';
 import {createShowButtonTemplate} from './components/show-more-button.js';
 import {createTopRatedTemplate} from './components/top-rated.js';
 import {createMostCommentedTemplate} from './components/most-comment.js';
@@ -55,10 +55,10 @@ const ratedContainerElements = filmsContainerElement.querySelectorAll(`section.f
 Array.from(ratedContainerElements).forEach((it) => {
   switch(it.previousElementSibling.firstChild.data) {
     case `Top rated`:
-      getTopRatedFilms(cards, FILM_POPULAR).forEach((card) => render(it, createFilmCardTempalate(card), `beforeend`));
+      getConditionFilms(cards, FILM_POPULAR, 'rate').forEach((card) => render(it, createFilmCardTempalate(card), `beforeend`));
       break;
     case `Most commented`:
-      getMostCommentedFilms(cards, FILM_POPULAR).forEach((card) => render(it, createFilmCardTempalate(card), `beforeend`));
+      getConditionFilms(cards, FILM_POPULAR, 'comments').forEach((card) => render(it, createFilmCardTempalate(card), `beforeend`));
       break;
   };
 });

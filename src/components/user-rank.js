@@ -1,9 +1,4 @@
-import {ranks} from '../mocks/const.js';
-
-const getRank = (count) => {
-  let rank = ranks[Object.keys(ranks).find((it) => count <= it)];
-  return rank;
-};
+import {getRank} from '../mocks/util.js';
 
 export const createUserRankTemplate = (amount) => {
   return `<section class="header__profile profile">

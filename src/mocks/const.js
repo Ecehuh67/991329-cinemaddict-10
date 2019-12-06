@@ -1,4 +1,17 @@
-export const filmsList = [`The Shawshank Redemption`, `The Green Mile `, `Forrest Gump `, `Schindler's List`, `Intouchables`, `Inception`, `Léon`, `The Lion King`, `Fight Club `, `La vita è bella`, `Knockin' on Heaven's Door `, `The Godfather`, `Pulp Fiction`];
+export const filmsList = [
+  `The Shawshank Redemption`,
+  `The Green Mile `,
+  `Forrest Gump `,
+  `Schindler's List`,
+  `Intouchables`,
+  `Inception`,
+  `Léon`,
+  `The Lion King`,
+  `Fight Club `,
+  `La vita è bella`,
+  `Knockin' on Heaven's Door `,
+  `The Godfather`,
+  `Pulp Fiction`];
 
 export const descriptionsOfFilm = [
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,

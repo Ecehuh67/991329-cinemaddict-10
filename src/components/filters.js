@@ -15,6 +15,8 @@ export const createFiltersTemplate = (filters) => {
   return (
     `<nav class="main-navigation">
       ${filtersMarkup}
+      <a href="#stats" class="main-navigation__item main-navigation__item--additional">Stats
+      </a>
     </nav>`
   );
 };
