@@ -1,4 +1,6 @@
-export const createDetailInfoTemplate = () => {
+import {createElement} from '../mocks/utils.js';
+
+const createDetailInfoTemplate = () => {
   return `<section class="film-details">
     <form class="film-details__inner" action="" method="get">
       <div class="form-details__top-container">
@@ -169,3 +171,25 @@ export const createDetailInfoTemplate = () => {
     </form>
   </section>`;
 };
+
+export default class Popup {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createDetailInfoTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

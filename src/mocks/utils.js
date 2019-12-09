@@ -1,4 +1,4 @@
-import {ranks} from '../mocks/const.js';
+import {ranks} from '../mocks/consts.js';
 
 export const getRandomArrayItem = (array) => {
   return array[Math.floor(Math.random() * array.length)];
@@ -40,4 +40,27 @@ export const getConditionFilms = (cards, amount, category) => {
 export const getRank = (count) => {
   let rank = ranks[Object.keys(ranks).find((it) => count <= it)];
   return rank;
+};
+
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+export const RenderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
+
+export const render = (container, element, place) => {
+  switch (place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
 };

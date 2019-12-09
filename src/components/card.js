@@ -1,3 +1,5 @@
+import {createElement} from '../mocks/utils.js';
+
 export const createFilmCardTempalate = (card) => {
   const {title, rate, year, duration, genre, poster, description, comments} = card;
 
@@ -21,3 +23,26 @@ export const createFilmCardTempalate = (card) => {
     </article>`
   );
 };
+
+export default class Card {
+  constructor(card) {
+    this._card = card;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCardTempalate(this._card);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

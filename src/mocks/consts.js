@@ -45,3 +45,5 @@ export const ranks = {
   30: `cineman`,
   80: `movie buff`
 };
+
+export const rubricsForTop = [`Top rated`, `Most commented`];
