@@ -20,6 +20,41 @@ const TOP_LIST_AMOUNT = 2;
 let showingCardCount = SHOWING_CARD;
 
 const headerElement = document.querySelector(`.header`);
+const bodyElement = document.querySelector(`body`);
+
+const renderCard = (cardListElement, card) => {
+  const cardComponent = new CardComponent(card);
+  const cardPosterElement = cardComponent.getElement().querySelector(`.film-card__poster`);
+  const cardTitleElement = cardComponent.getElement().querySelector(`.film-card__title`);
+  const cardCommentElement = cardComponent.getElement().querySelector(`.film-card__comments`);
+  const cardElements = [cardPosterElement, cardTitleElement, cardCommentElement];
+
+  render(cardListElement, cardComponent.getElement(), RenderPosition.BEFOREEND);
+
+  const createPopupElement = (card) => {
+    const popupComponent = new PopupComponent(card);
+    const popupButtonClose = popupComponent.getElement().querySelector(`.film-details__close-btn`);
+
+    popupButtonClose.addEventListener(`click`, () => {
+      popupComponent.getElement().remove();
+      popupComponent.removeElement();
+    })
+
+    return popupComponent;
+  };
+
+  cardElements.forEach((el) => {
+    el.addEventListener(`click`, () => {
+      const isPopup = document.querySelector(`.film-details`);
+      if (isPopup) {
+        isPopup.remove();
+        render(bodyElement, createPopupElement(card).getElement(), RenderPosition.BEFOREEND);
+      } else {
+        render(bodyElement, createPopupElement(card).getElement(), RenderPosition.BEFOREEND);
+      }
+    });
+  });
+};
 
 // Randomly generate a number for getting Rate of user
 const randomRate = getRandomNumber(90);
@@ -40,7 +75,9 @@ render(filmsContainerElement.getElement(), filmsPosterElement.getElement(), Rend
 
 const filmsListElement = filmsPosterElement.getElement().querySelector(`.films-list__container`);
 
-cards.slice(0, showingCardCount).forEach((card) => render(filmsListElement, new CardComponent(card).getElement(), RenderPosition.BEFOREEND));
+// cards.slice(0, showingCardCount).forEach((card) => render(filmsListElement, new CardComponent(card).getElement(), RenderPosition.BEFOREEND));
+
+cards.slice(0, showingCardCount).forEach((card) => renderCard(filmsListElement, card));
 
 render(filmsPosterElement.getElement(), new ButtonComponent().getElement(), RenderPosition.BEFOREEND);
 
@@ -56,18 +93,13 @@ Array.from(ratedContainerElements).forEach((it) => {
   const card = new CardComponent();
   switch(it.previousElementSibling.firstChild.data) {
     case `Top rated`:
-    console.log('1');
-      getConditionFilms(cards, FILM_POPULAR, 'rate').forEach((card) => render(it, new CardComponent(card).getElement(), RenderPosition.BEFOREEND));
+      getConditionFilms(cards, FILM_POPULAR, 'rate').forEach((card) => renderCard(it, card));
       break;
     case `Most commented`:
-      getConditionFilms(cards, FILM_POPULAR, 'comments').forEach((card) => render(it, new CardComponent(card).getElement(), RenderPosition.BEFOREEND));
+      getConditionFilms(cards, FILM_POPULAR, 'comments').forEach((card) => renderCard(it, card));
       break;
   };
 });
-
-//This's the popup which don't allow to look at the page properly that's why I commented it
-const bodyElement = document.querySelector(`body`);
-//render(bodyElement, new PopupComponent().getElement(), RenderPosition.BEFOREEND);
 
 const buttonLoadMore = filmsPosterElement.getElement().querySelector(`.films-list__show-more`);
 buttonLoadMore.addEventListener(`click`, () => {
@@ -75,7 +107,7 @@ buttonLoadMore.addEventListener(`click`, () => {
   showingCardCount += CARD_COUNT_BY_BUTTON;
 
   cards.slice(showedCards, showingCardCount).forEach((card) => {
-    return render(filmsPosterElement.getElement(), new CardComponent(card).getElement(), RenderPosition.BEFOREEND);
+    return renderCard(filmsListElement, card);
   });
 
   if (showingCardCount >= cards.length) {
