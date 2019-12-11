@@ -1,20 +1,20 @@
 import {createElement} from '../mocks/utils.js';
 
-const createFilmsPosterTemplate = () => {
-  return `<section class="films-list">
-    <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+const createTopListTemplate = (caption) => {
+  return `<section class="films-list--extra">
+    <h2 class="films-list__title">${caption}</h2>
     <div class="films-list__container"></div>
-    </section>`;
+  </section>`;
 };
 
-
-export default class Poster {
-  constructor() {
+export default class TopList {
+  constructor(caption) {
+    this._caption = caption;
     this._element = null;
   }
 
   getTemplate() {
-    return createFilmsPosterTemplate();
+    return createTopListTemplate(this._caption);
   }
 
   getElement() {

@@ -1,3 +1,5 @@
+import {ranks} from '../mocks/consts.js';
+
 export const getRandomArrayItem = (array) => {
   return array[Math.floor(Math.random() * array.length)];
 };
@@ -29,18 +31,36 @@ export const getTime = () => {
 };
 
 // What way Can I sent key of object like paramets of function to not use the same functions below??
-export const getTopRatedFilms = (cards, amount) => {
-  const values = cards.map((card) => card.rate).sort((a, b) => a - b).slice(-amount);
-  const newCards = cards.filter((card) => {
-    return values.find((it) => it === card.rate);
-  });
+export const getConditionFilms = (cards, amount, category) => {
+  const values = cards.map((card) => card[category]).sort((a, b) => a - b).slice(-amount);
+  const newCards = cards.filter((card) => values.find((it) => it === card[category])).slice(-amount);
   return newCards;
 };
 
-export const getMostCommentedFilms = (cards, amount) => {
-  const values = cards.map((card) => card.comments).sort((a, b) => a - b).slice(-amount);
-  const newCards = cards.filter((card) => {
-    return values.find((it) => it === card.comments);
-  });
-  return newCards;
+export const getRank = (count) => {
+  let rank = ranks[Object.keys(ranks).find((it) => count <= it)];
+  return rank;
+};
+
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+export const RenderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
+
+export const render = (container, element, place) => {
+  switch (place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
 };
