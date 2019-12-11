@@ -1,4 +1,4 @@
-import {createElement} from '../mocks/utils.js';
+import {createElement} from '../mocks/utils';
 
 const createFilterMarkup = (filter, isActive) => {
   const {title, count} = filter;

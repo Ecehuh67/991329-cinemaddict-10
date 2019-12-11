@@ -1,4 +1,4 @@
-import {createElement} from '../mocks/utils.js';
+import {createElement} from '../mocks/utils';
 
 const createContainerPageTemplate = () => {
   return `<section class="films"></section>`;
