@@ -26,3 +26,13 @@ export const generateFilters = (cards) => {
     };
   });
 };
+
+export const generateNoCardFilters = () => {
+
+  return filters.map((it) => {
+    return {
+      title: it,
+      count: ``
+    };
+  });
+};

@@ -7,8 +7,9 @@ import CardComponent from './components/card.js';
 import ButtonComponent from './components/show-more-button.js';
 import TopListComponent from './components/top-list.js';
 import PopupComponent from './components/detail.js';
+import NoCardComponent from './components/no-card.js';
 import {generateCards} from './mocks/card.js';
-import {generateFilters} from './mocks/filter.js';
+import {generateFilters, generateNoCardFilters} from './mocks/filter.js';
 import {rubricsForTop} from './mocks/consts.js';
 import {getRandomNumber, getConditionFilms, render, RenderPosition} from './mocks/utils.js';
 
@@ -21,6 +22,7 @@ let showingCardCount = SHOWING_CARD;
 
 const headerElement = document.querySelector(`.header`);
 const bodyElement = document.querySelector(`body`);
+const mainElement = document.querySelector(`.main`);
 
 const renderCard = (cardListElement, card) => {
   const cardComponent = new CardComponent(card);
@@ -34,6 +36,18 @@ const renderCard = (cardListElement, card) => {
   const createPopupElement = (card) => {
     const popupComponent = new PopupComponent(card);
     const popupButtonClose = popupComponent.getElement().querySelector(`.film-details__close-btn`);
+
+    const onEscKeyDown = (evt) => {
+      const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+      if (isEscKey) {
+        popupComponent.getElement().remove();
+        popupComponent.removeElement();
+        document.removeEventListener(`keydown`, onEscKeyDown);
+      }
+    };
+
+    document.addEventListener(`keydown`, onEscKeyDown);
 
     popupButtonClose.addEventListener(`click`, () => {
       popupComponent.getElement().remove();
@@ -56,17 +70,27 @@ const renderCard = (cardListElement, card) => {
   });
 };
 
+
 // Randomly generate a number for getting Rate of user
 const randomRate = getRandomNumber(90);
 render(headerElement, new RankComponent(randomRate).getElement(), RenderPosition.BEFOREEND);
 
 const cards = generateCards(FILM_COUNT);
-const filters = generateFilters(cards);
 
-const mainElement = document.querySelector(`.main`);
+const isCards = cards.length;
+
+if (!isCards) {
+  const filter = generateNoCardFilters();
+  render(mainElement, new FilterComponent(filter).getElement(), RenderPosition.BEFOREEND);
+  render(mainElement, new SortComponent().getElement(), RenderPosition.BEFOREEND);
+  render(mainElement, new NoCardComponent().getElement(), RenderPosition.BEFOREEND);
+} else {
+const filters = generateFilters(cards);
 
 render(mainElement, new FilterComponent(filters).getElement(), RenderPosition.BEFOREEND);
 render(mainElement, new SortComponent().getElement(), RenderPosition.BEFOREEND);
+
+
 const filmsContainerElement = new ContainerComponent();
 render(mainElement, filmsContainerElement.getElement(), RenderPosition.BEFOREEND);
 
@@ -74,8 +98,6 @@ const filmsPosterElement = new PosterComponent();
 render(filmsContainerElement.getElement(), filmsPosterElement.getElement(), RenderPosition.BEFOREEND);
 
 const filmsListElement = filmsPosterElement.getElement().querySelector(`.films-list__container`);
-
-// cards.slice(0, showingCardCount).forEach((card) => render(filmsListElement, new CardComponent(card).getElement(), RenderPosition.BEFOREEND));
 
 cards.slice(0, showingCardCount).forEach((card) => renderCard(filmsListElement, card));
 
@@ -117,3 +139,4 @@ buttonLoadMore.addEventListener(`click`, () => {
 
 const totalFilms = document.querySelector(`.footer__statistics p`);
 totalFilms.textContent = `${cards.length} movies inside`;
+}
