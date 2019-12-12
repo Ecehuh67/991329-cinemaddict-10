@@ -1,4 +1,4 @@
-import {createElement} from '../mocks/utils.js';
+import {createElement} from '../mocks/utils';
 
 const createShowButtonTemplate = () => {
   return `<button class="films-list__show-more">Show more</button>`;

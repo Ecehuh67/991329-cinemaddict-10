@@ -1,4 +1,4 @@
-import {ranks} from '../mocks/consts.js';
+import {ranks} from '../mocks/consts';
 
 export const getRandomArrayItem = (array) => {
   return array[Math.floor(Math.random() * array.length)];

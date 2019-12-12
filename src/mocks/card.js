@@ -1,8 +1,8 @@
 import {
   getRandomArrayItem, getRandomArray, getRandomNumberPointNotation, getRandomArrayNumber, getTime, getRandomNumber
-} from './utils.js';
+} from './utils';
 
-import {filmsList, postersList, descriptionsOfFilm, genres} from './consts.js';
+import {filmsList, postersList, descriptionsOfFilm, genres} from './consts';
 
 const generateCard = () => {
   const randomLengthArray = getRandomArray(descriptionsOfFilm);

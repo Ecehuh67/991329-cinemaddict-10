@@ -1,4 +1,4 @@
-import {createElement} from '../mocks/utils.js';
+import {createElement} from '../mocks/utils';
 
 const createTopListTemplate = (caption) => {
   return `<section class="films-list--extra">

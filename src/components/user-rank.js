@@ -1,4 +1,4 @@
-import {getRank, createElement} from '../mocks/utils.js';
+import {getRank, createElement} from '../mocks/utils';
 
 const createUserRankTemplate = (amount) => {
   return `<section class="header__profile profile">

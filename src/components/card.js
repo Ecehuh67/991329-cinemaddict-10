@@ -1,4 +1,4 @@
-import {createElement} from '../mocks/utils.js';
+import {createElement} from '../mocks/utils';
 
 export const createFilmCardTempalate = (card) => {
   const {title, rate, year, duration, genre, poster, description, comments} = card;
