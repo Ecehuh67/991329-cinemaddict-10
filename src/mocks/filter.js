@@ -18,21 +18,13 @@ export const generateFilters = (cards) => {
       case `Favorites`:
         index = cards.filter((card) => card.isFavorites).length;
         break;
+      default:
+        index = ``;
     }
 
     return {
       title: it,
       count: index
-    };
-  });
-};
-
-export const generateNoCardFilters = () => {
-
-  return filters.map((it) => {
-    return {
-      title: it,
-      count: ``
     };
   });
 };

@@ -1,4 +1,5 @@
-import {createElement} from '../mocks/utils';
+import AbstractComponent from './abstract-component';
+import {cardHandlerElements} from '../mocks/consts';
 
 export const createFilmCardTempalate = (card) => {
   const {title, rate, year, duration, genre, poster, description, comments} = card;
@@ -24,25 +25,26 @@ export const createFilmCardTempalate = (card) => {
   );
 };
 
-export default class Card {
+export default class Card extends AbstractComponent {
   constructor(card) {
+    super();
     this._card = card;
-    this._element = null;
   }
 
   getTemplate() {
     return createFilmCardTempalate(this._card);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
+  getHandlerElements() {
+    const elements = [];
+    cardHandlerElements.forEach((it) => elements.push(this.getElement().querySelector(it)));
 
-    return this._element;
+    return elements;
   }
 
-  removeElement() {
-    this._element = null;
+  setClickHandler(handler) {
+    this.getHandlerElements().forEach((it) => {
+      it.addEventListener(`click`, handler);
+    });
   }
 }

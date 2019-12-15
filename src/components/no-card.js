@@ -1,5 +1,5 @@
 
-import {createElement} from '../mocks/utils';
+import AbstractComponent from './abstract-component';
 
 const createNoCardTemplate = () => {
   return (
@@ -12,24 +12,8 @@ const createNoCardTemplate = () => {
 };
 
 
-export default class NoCard {
-  constructor() {
-    this._element = null;
-  }
-
+export default class NoCard extends AbstractComponent {
   getTemplate() {
     return createNoCardTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

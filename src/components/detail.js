@@ -1,4 +1,4 @@
-import {createElement} from '../mocks/utils';
+import AbstractComponent from './abstract-component';
 
 
 // I need to create a function for creating and rendering HTML into pattern
@@ -177,25 +177,17 @@ const createDetailInfoTemplate = (card) => {
   );
 };
 
-export default class Popup {
+export default class Popup extends AbstractComponent {
   constructor(card) {
+    super();
     this._card = card;
-    this._element = null;
   }
 
   getTemplate() {
     return createDetailInfoTemplate(this._card);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setButtonCloseHandler(handler) {
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
   }
 }

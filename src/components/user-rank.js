@@ -1,4 +1,5 @@
-import {getRank, createElement} from '../mocks/utils';
+import {getRank} from '../utils/common';
+import AbstractComponent from './abstract-component';
 
 const createUserRankTemplate = (amount) => {
   return `<section class="header__profile profile">
@@ -7,25 +8,13 @@ const createUserRankTemplate = (amount) => {
   </section>`;
 };
 
-export default class Rank {
+export default class Rank extends AbstractComponent {
   constructor(amount) {
+    super();
     this._amount = amount;
-    this._element = null;
   }
 
   getTemplate() {
     return createUserRankTemplate(this._amount);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

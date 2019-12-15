@@ -1,4 +1,4 @@
-import {createElement} from '../mocks/utils';
+import AbstractComponent from './abstract-component';
 
 const createTopListTemplate = (caption) => {
   return `<section class="films-list--extra">
@@ -7,25 +7,13 @@ const createTopListTemplate = (caption) => {
   </section>`;
 };
 
-export default class TopList {
+export default class TopList extends AbstractComponent {
   constructor(caption) {
+    super();
     this._caption = caption;
-    this._element = null;
   }
 
   getTemplate() {
     return createTopListTemplate(this._caption);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
