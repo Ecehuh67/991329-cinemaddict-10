@@ -47,3 +47,9 @@ export const ranks = {
 };
 
 export const rubricsForTop = [`Top rated`, `Most commented`];
+
+export const cardHandlerElements = [
+  `.film-card__poster`,
+  `.film-card__title`,
+  `.film-card__comments`
+];

@@ -1,6 +1,6 @@
 import {
   getRandomArrayItem, getRandomArray, getRandomNumberPointNotation, getRandomArrayNumber, getTime, getRandomNumber
-} from './utils';
+} from '../utils/common';
 
 import {filmsList, postersList, descriptionsOfFilm, genres} from './consts';
 

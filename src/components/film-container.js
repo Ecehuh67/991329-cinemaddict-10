@@ -1,28 +1,12 @@
-import {createElement} from '../mocks/utils';
+import AbstractComponent from './abstract-component';
 
 const createContainerPageTemplate = () => {
   return `<section class="films"></section>`;
 };
 
 
-export default class Container {
-  constructor() {
-    this._element = null;
-  }
-
+export default class Container extends AbstractComponent {
   getTemplate() {
     return createContainerPageTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

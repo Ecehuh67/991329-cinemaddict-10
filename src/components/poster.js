@@ -1,4 +1,4 @@
-import {createElement} from '../mocks/utils';
+import AbstractComponent from './abstract-component';
 
 const createFilmsPosterTemplate = () => {
   return `<section class="films-list">
@@ -8,24 +8,8 @@ const createFilmsPosterTemplate = () => {
 };
 
 
-export default class Poster {
-  constructor() {
-    this._element = null;
-  }
-
+export default class Poster extends AbstractComponent {
   getTemplate() {
     return createFilmsPosterTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
