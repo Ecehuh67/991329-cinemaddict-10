@@ -2,19 +2,19 @@ import CardComponent from '../components/card';
 import ButtonComponent from '../components/show-more-button';
 import NoCardComponent from '../components/no-card';
 import PosterComponent from '../components/poster';
+import SortComponent, {SortType} from '../components/sort';
 import TopListComponent from '../components/top-list';
 import PopupComponent from '../components/detail';
 import {render, RenderPosition, remove} from '../utils/render';
 import {rubricsForTop} from '../mocks/consts';
 import {getConditionFilms} from '../utils/common';
 
-
 const SHOWING_CARD = 5;
 const CARD_COUNT_BY_BUTTON = 5;
 const FILM_POPULAR = 2;
 const TOP_LIST_AMOUNT = 2;
 
-let showingCardCount = SHOWING_CARD;
+export let showingCardCount = SHOWING_CARD;
 
 const renderCard = (cardListElement, card) => {
   const cardComponent = new CardComponent(card);
@@ -54,7 +54,7 @@ const renderCard = (cardListElement, card) => {
   });
 };
 
-const renderCards = (filmsListElement, cards) => {
+export const renderCards = (filmsListElement, cards) => {
   cards.forEach((card) => renderCard(filmsListElement, card));
 };
 
@@ -88,6 +88,7 @@ export default class PageController {
     this._loadMoreComponent = new ButtonComponent();
     this._noCardsComponent = new NoCardComponent();
     this._posterComponent = new PosterComponent();
+    this._sortComponent = new SortComponent();
   }
 
   render(cards) {
@@ -112,6 +113,9 @@ export default class PageController {
       });
     };
 
+    const mainElement = document.querySelector(`main`);
+    render(mainElement, this._sortComponent, RenderPosition.BEFOREEND);
+
     const container = this._container.getElement();
     const isCards = cards.length;
 
@@ -130,5 +134,31 @@ export default class PageController {
     createFilmContainers(container, TOP_LIST_AMOUNT);
 
     renderTopListFilms(container, cards);
+
+
+    this._sortComponent.setSortTypeChangeHandler((sortType) => {
+      let sortedCards = [];
+
+      switch (sortType) {
+        case SortType.DATE:
+          sortedCards = cards.slice().sort((a, b) => b.year - a.year);
+          break;
+        case SortType.RATING:
+          sortedCards = cards.slice().sort((a, b) => b.rate - a.rate);
+          break;
+        case SortType.DEFAULT:
+          sortedCards = cards.slice(0, showingCardCount);
+          break;
+      }
+
+      filmsListElement.innerHTML = ``;
+      renderCards(filmsListElement, sortedCards);
+
+      if (sortType === SortType.Default) {
+        renderLoadMoreButton();
+      } else {
+        remove(this._loadMoreComponent);
+      }
+    });
   }
 }

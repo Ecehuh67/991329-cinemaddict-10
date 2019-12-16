@@ -1,5 +1,4 @@
 import AbstractComponent from './abstract-component';
-import {cardHandlerElements} from '../mocks/consts';
 
 export const createFilmCardTempalate = (card) => {
   const {title, rate, year, duration, genre, poster, description, comments} = card;
@@ -36,6 +35,12 @@ export default class Card extends AbstractComponent {
   }
 
   getHandlerElements() {
+    const cardHandlerElements = [
+      `.film-card__poster`,
+      `.film-card__title`,
+      `.film-card__comments`
+    ];
+
     const elements = [];
     cardHandlerElements.forEach((it) => elements.push(this.getElement().querySelector(it)));
 
