@@ -1,12 +1,12 @@
 import RankComponent from './components/user-rank';
 import FilterComponent from './components/filters';
-import SortComponent from './components/sort';
+import SortComponent, {SortType} from './components/sort';
 import ContainerComponent from './components/film-container';
-import PageController from './controllers/page';
+import PageController, {renderCards, showingCardCount} from './controllers/page';
 import {generateCards} from './mocks/card';
 import {generateFilters} from './mocks/filter';
 import {getRandomNumber} from './utils/common';
-import {render, RenderPosition, remove} from './utils/render';
+import {render, RenderPosition, replaceSort} from './utils/render';
 
 const FILM_COUNT = 15;
 
@@ -21,7 +21,6 @@ const cards = generateCards(FILM_COUNT);
 const filters = generateFilters(cards);
 
 render(mainElement, new FilterComponent(filters), RenderPosition.BEFOREEND);
-render(mainElement, new SortComponent(), RenderPosition.BEFOREEND);
 
 const containerComponent = new ContainerComponent();
 render(mainElement, containerComponent, RenderPosition.BEFOREEND);
@@ -30,6 +29,7 @@ const pageController = new PageController(containerComponent);
 
 pageController.render(cards);
 
+replaceSort(mainElement);
 
 const totalFilms = document.querySelector(`.footer__statistics p`);
 totalFilms.textContent = `${cards.length} movies inside`;
