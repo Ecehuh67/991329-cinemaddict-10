@@ -16,9 +16,12 @@ const generateCard = () => {
     poster: getRandomArrayItem(postersList),
     description: descriptionsOfFilm.slice(randomLengthArray[0], randomLengthArray[1]),
     comments: getRandomNumber(10),
-    isFavorites: Math.random() > 0.5,
+    isAddedToWatch: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
-    isLookingThrough: Math.random() > 0.5
+    isFavorite: Math.random() > 0.5
+    // isFavorites: Math.random() > 0.5,
+    // isWatched: Math.random() > 0.5,
+    // isLookingThrough: Math.random() > 0.5
   };
 };
 

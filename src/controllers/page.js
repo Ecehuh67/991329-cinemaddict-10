@@ -1,13 +1,14 @@
-import CardComponent from '../components/card';
+// import CardComponent from '../components/card';
 import ButtonComponent from '../components/show-more-button';
 import NoCardComponent from '../components/no-card';
 import PosterComponent from '../components/poster';
 import SortComponent, {SortType} from '../components/sort';
 import TopListComponent from '../components/top-list';
-import PopupComponent from '../components/detail';
+// import PopupComponent from '../components/detail';
 import {render, RenderPosition, remove} from '../utils/render';
 import {rubricsForTop} from '../mocks/consts';
 import {getConditionFilms} from '../utils/common';
+import MovieController from './movie';
 
 const SHOWING_CARD = 5;
 const CARD_COUNT_BY_BUTTON = 5;
@@ -16,46 +17,12 @@ const TOP_LIST_AMOUNT = 2;
 
 export let showingCardCount = SHOWING_CARD;
 
-const renderCard = (cardListElement, card) => {
-  const cardComponent = new CardComponent(card);
-
-  render(cardListElement, cardComponent, RenderPosition.BEFOREEND);
-
-  const createPopupElement = (item) => {
-    const popupComponent = new PopupComponent(item);
-
-    const onEscKeyDown = (evt) => {
-      const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
-
-      if (isEscKey) {
-        remove(popupComponent);
-        document.removeEventListener(`keydown`, onEscKeyDown);
-      }
-    };
-
-    document.addEventListener(`keydown`, onEscKeyDown);
-
-    popupComponent.setButtonCloseHandler(() => {
-      remove(popupComponent);
-    });
-
-    return popupComponent;
-  };
-
-  cardComponent.setClickHandler(() => {
-    const isPopup = document.querySelector(`.film-details`);
-    const bodyElement = document.querySelector(`body`);
-
-    if (isPopup) {
-      isPopup.remove();
-    }
-
-    render(bodyElement, createPopupElement(card), RenderPosition.BEFOREEND);
-  });
-};
-
-export const renderCards = (filmsListElement, cards) => {
-  cards.forEach((card) => renderCard(filmsListElement, card));
+export const renderCards = (filmsListElement, cards, onDataChange) => {
+  return cards.map((card) => {
+    const movieController = new MovieController(filmsListElement, onDataChange);
+    movieController.render(card);
+    return movieController;
+  })
 };
 
 const createFilmContainers = (place, count) => {
@@ -66,32 +33,37 @@ const createFilmContainers = (place, count) => {
     });
 };
 
-const renderTopListFilms = (container, cards) => {
-  const ratedContainerElements = container.querySelectorAll(`section.films-list--extra > .films-list__container`);
-
-  Array.from(ratedContainerElements).forEach((it) => {
-
-    switch (it.previousElementSibling.firstChild.data) {
-      case `Top rated`:
-        getConditionFilms(cards, FILM_POPULAR, `rate`).forEach((item) => renderCard(it, item));
-        break;
-      case `Most commented`:
-        getConditionFilms(cards, FILM_POPULAR, `comments`).forEach((item) => renderCard(it, item));
-        break;
-    }
-  });
-};
+// const renderTopListFilms = (container, cards) => {
+//   const ratedContainerElements = container.querySelectorAll(`section.films-list--extra > .films-list__container`);
+//
+//   Array.from(ratedContainerElements).forEach((it) => {
+//
+//     switch (it.previousElementSibling.firstChild.data) {
+//       case `Top rated`:
+//         getConditionFilms(cards, FILM_POPULAR, `rate`).forEach((item) => renderCard(it, item));
+//         break;
+//       case `Most commented`:
+//         getConditionFilms(cards, FILM_POPULAR, `comments`).forEach((item) => renderCard(it, item));
+//         break;
+//     }
+//   });
+// };
 
 export default class PageController {
   constructor(container) {
     this._container = container;
+    this._cards = [];
     this._loadMoreComponent = new ButtonComponent();
     this._noCardsComponent = new NoCardComponent();
     this._posterComponent = new PosterComponent();
     this._sortComponent = new SortComponent();
+    this._movieController = new MovieController(this._posterComponent);
+
+    this._onDataChange = this._onDataChange.bind(this);
   }
 
   render(cards) {
+    this._cards = cards;
     const renderLoadMoreButton = () => {
       if (showingCardCount >= cards.length) {
         return;
@@ -128,12 +100,12 @@ export default class PageController {
 
     const filmsListElement = this._posterComponent.getElement().querySelector(`.films-list__container`);
 
-    renderCards(filmsListElement, cards.slice(0, showingCardCount));
+    renderCards(filmsListElement, cards.slice(0, showingCardCount), this._onDataChange);
     renderLoadMoreButton();
 
     createFilmContainers(container, TOP_LIST_AMOUNT);
 
-    renderTopListFilms(container, cards);
+    // renderTopListFilms(container, cards);
 
 
     this._sortComponent.setSortTypeChangeHandler((sortType) => {
@@ -160,5 +132,18 @@ export default class PageController {
         remove(this._loadMoreComponent);
       }
     });
+  }
+
+  _onDataChange(movieController, oldData, newData) {
+    const index = this._cards.findIndex((it) => it === oldData);
+
+    if (index === -1) {
+      return;
+    }
+
+    this._cards = [].concat(this._cards.slice(0, index), newData, this._cards.slice(index + 1));
+
+    movieController.render(this._cards[index]);
+    console.log('card was changed');
   }
 }

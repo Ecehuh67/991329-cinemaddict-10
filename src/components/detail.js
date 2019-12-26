@@ -1,4 +1,4 @@
-import AbstractComponent from './abstract-component';
+import AbstractSmartComponent from './abstract-smart-component';
 
 
 // I need to create a function for creating and rendering HTML into pattern
@@ -177,10 +177,12 @@ const createDetailInfoTemplate = (card) => {
   );
 };
 
-export default class Popup extends AbstractComponent {
+export default class Popup extends AbstractSmartComponent {
   constructor(card) {
     super();
     this._card = card;
+
+    this._closeHandler = null;
   }
 
   getTemplate() {
@@ -189,5 +191,33 @@ export default class Popup extends AbstractComponent {
 
   setButtonCloseHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
+
+    this._closeHandler = handler;
+  }
+
+  setAddToWatchlistLabelHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, handler);
+  }
+
+  setAsWatchedLabelHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, handler);
+  }
+
+  setAddToFavoritesLabelHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, handler);
+  }
+
+  rerender() {
+    super.rerender();
+  }
+
+  recoveryListeners() {
+    this.setButtonCloseHandler(this._closeHandler)
+  }
+
+  _reset() {
+    const card = this._card;
+
+    this.rerender();
   }
 }
