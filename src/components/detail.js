@@ -183,6 +183,10 @@ export default class Popup extends AbstractSmartComponent {
     this._card = card;
 
     this._closeHandler = null;
+
+    this._isAddedToWatch = this._card.isAddedToWatch;
+
+    console.log(this._isAddedToWatch)
   }
 
   getTemplate() {
@@ -217,6 +221,9 @@ export default class Popup extends AbstractSmartComponent {
 
   _reset() {
     const card = this._card;
+
+    console.log(this._isAddedToWatch);
+    console.log(`Component was recovered`);
 
     this.rerender();
   }

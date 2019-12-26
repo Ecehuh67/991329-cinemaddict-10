@@ -31,6 +31,7 @@ export default class MovieController {
 
     this._popupComponent.setButtonCloseHandler(() => {
       remove(this._popupComponent);
+      this._popupComponent._reset();
     });
 
     this._popupComponent.setAddToWatchlistLabelHandler(() => {
@@ -45,7 +46,6 @@ export default class MovieController {
       this._onDataChange(this, card, Object.assign({}, card, {
         isAddedToWatch: !card.isAddedToWatch,
       }));
-      //this._popupComponent._reset();
     });
 
     this._cardComponent.setAsWatchedButtonHandler(() => {
@@ -75,7 +75,8 @@ export default class MovieController {
 
     if (oldCardComponent && oldPopupComponent) {
       replace(this._cardComponent, oldCardComponent);
-      // replace(this._popupComponent, oldPopupComponent);
+      replace(this._popupComponent, oldPopupComponent);
+      this._popupComponent._reset();
       console.log(oldCardComponent);
     } else {
       render(this._container, this._cardComponent, RenderPosition.BEFOREEND);
@@ -88,6 +89,7 @@ export default class MovieController {
     if (isEscKey) {
       remove(this._popupComponent);
       document.removeEventListener(`keydown`, this._onEscKeyDown);
+      this._popupComponent._reset();
     }
   }
 }
