@@ -40,3 +40,11 @@ export const getRank = (count) => {
   let rank = ranks[Object.keys(ranks).find((it) => count <= it)];
   return rank;
 };
+
+export const generateComment = (comments) => {
+  return {
+    text: getRandomArrayItem(comments),
+    author: `John Doe`,
+    data: `2019/12/31 23:59`
+  };
+};
