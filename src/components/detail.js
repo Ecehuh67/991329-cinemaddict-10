@@ -1,10 +1,13 @@
 import AbstractSmartComponent from './abstract-smart-component';
 import {CommentEmojiImages} from '../mocks/consts';
-
+import {formateDate, formatTime, getRandomDate} from '../utils/common';
 
 // I need to create a function for creating and rendering HTML into pattern
 const createDetailInfoTemplate = (card, options) => {
-  const {title, rate, year, duration, genre, poster, description, comments, isAddedToWatch, isWatched, isFavorite} = card;
+  const {title, rate, genre, poster, description, comments, isAddedToWatch, isWatched, isFavorite} = card;
+
+  const date = formateDate(getRandomDate());
+  const duration = formatTime(getRandomDate());
   const {commentEmojiImage} = options;
 
   return (
@@ -48,7 +51,7 @@ const createDetailInfoTemplate = (card, options) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">30 March ${year}</td>
+                  <td class="film-details__cell">${date}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>

@@ -1,4 +1,5 @@
 import {ranks} from '../mocks/consts';
+import moment from 'moment';
 
 export const getRandomArrayItem = (array) => {
   return array[Math.floor(Math.random() * array.length)];
@@ -47,4 +48,26 @@ export const generateComment = (comments) => {
     author: `John Doe`,
     data: `2019/12/31 23:59`
   };
+};
+
+export const formateDate = (date) => {
+  return moment(date).format(`DD MMMM YYYY`);
+};
+
+export const formatTime = (date) => {
+  return moment(date).format(`h[h] m[m]`);
+};
+
+const getRandomIntegerNumber = (min, max) => {
+  return min + Math.floor(max * Math.random());
+};
+
+export const getRandomDate = () => {
+  const targetDate = new Date();
+  // 50% chance randomly generate minus or plus
+  const sign = Math.random() > 0.5 ? 1 : -1;
+  const diffValue = sign * getRandomIntegerNumber(0, 10000);
+  //
+  targetDate.setDate(targetDate.getDate() + diffValue);
+  return targetDate;
 };
