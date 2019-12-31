@@ -1,8 +1,8 @@
 import {
-  getRandomArrayItem, getRandomArray, getRandomNumberPointNotation, getRandomArrayNumber, getTime, getRandomNumber
+  getRandomArrayItem, getRandomArray, getRandomNumberPointNotation, getRandomArrayNumber, getTime, getRandomNumber, generateComment
 } from '../utils/common';
 
-import {filmsList, postersList, descriptionsOfFilm, genres} from './consts';
+import {filmsList, postersList, descriptionsOfFilm, genres, comments} from './consts';
 
 const generateCard = () => {
   const randomLengthArray = getRandomArray(descriptionsOfFilm);
@@ -15,10 +15,11 @@ const generateCard = () => {
     genre: getRandomArrayItem(genres),
     poster: getRandomArrayItem(postersList),
     description: descriptionsOfFilm.slice(randomLengthArray[0], randomLengthArray[1]),
-    comments: getRandomNumber(10),
-    isFavorites: Math.random() > 0.5,
+    isAddedToWatch: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
-    isLookingThrough: Math.random() > 0.5
+    isFavorite: Math.random() > 0.5,
+    comments: getRandomNumber(10),
+    popupComments: generateComment(comments)
   };
 };
 
