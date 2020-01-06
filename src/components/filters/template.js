@@ -1,5 +1,3 @@
-import AbstractComponent from './abstract-component';
-
 const createFilterMarkup = (filter, isActive) => {
   const {title, count} = filter;
 
@@ -11,7 +9,7 @@ const createFilterMarkup = (filter, isActive) => {
   );
 };
 
-const createFiltersTemplate = (filters) => {
+export const createFiltersTemplate = (filters) => {
   const filtersMarkup = filters.map((it, i) => createFilterMarkup(it, i === 0)).join(`\n`);
 
   return (
@@ -22,14 +20,3 @@ const createFiltersTemplate = (filters) => {
     </nav>`
   );
 };
-
-export default class Filter extends AbstractComponent {
-  constructor(filters) {
-    super();
-    this._filters = filters;
-  }
-
-  getTemplate() {
-    return createFiltersTemplate(this._filters);
-  }
-}

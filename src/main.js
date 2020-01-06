@@ -1,7 +1,6 @@
-import RankComponent from './components/user-rank';
-import FilterComponent from './components/filters';
-import SortComponent, {SortType} from './components/sort';
-import ContainerComponent from './components/film-container';
+import RankComponent from './components/user-rank/index';
+import FilterComponent from './components/filters/index';
+import ContainerComponent from './components/film-container/index';
 import PageController, {renderCards, showingCardCount} from './controllers/page';
 import {generateCards} from './mocks/card';
 import {generateFilters} from './mocks/filter';

@@ -1,8 +1,9 @@
-import ButtonComponent from '../components/show-more-button';
-import NoCardComponent from '../components/no-card';
-import PosterComponent from '../components/poster';
-import SortComponent, {SortType} from '../components/sort';
-import TopListComponent from '../components/top-list';
+import ButtonComponent from '../components/show-more-button/index';
+import NoCardComponent from '../components/no-card/index';
+import PosterComponent from '../components/poster-container/index';
+import SortComponent from '../components/sort/index';
+import {SortType} from '../components/sort/template';
+import TopListComponent from '../components/top-list/index';
 import {render, RenderPosition, remove} from '../utils/render';
 import {rubricsForTop} from '../mocks/consts';
 import {getConditionFilms} from '../utils/common';

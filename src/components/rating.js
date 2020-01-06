@@ -1,4 +1,4 @@
-import AbstractComponent from './abstract-component';
+import AbstractComponent from './abstract-components/component';
 
 const createRatingTemplate = (card) => {
   const {title, poster} = card;

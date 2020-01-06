@@ -1,14 +1,29 @@
-import AbstractSmartComponent from './abstract-smart-component';
-import {CommentEmojiImages} from '../mocks/consts';
-import {formateDate, formatTime, getRandomDate} from '../utils/common';
+import {formateDate, formatTime, getRandomDate} from '../../utils/common';
 
-// I need to create a function for creating and rendering HTML into pattern
-const createDetailInfoTemplate = (card, options) => {
+export const createDetailInfoTemplate = (card, options) => {
   const {title, rate, genre, poster, description, comments, isAddedToWatch, isWatched, isFavorite} = card;
+
+  const createGenresmarkup = (genres) => {
+    return (
+      `<span class="film-details__genre">${genres}</span>`
+    );
+  };
+
+  const createGenreTemplate = (genres) => {
+    const genresTemplate = genres.map((it) => createGenresmarkup(it)).join(`\n`);
+
+    return (
+      `<td class="film-details__cell">
+        ${genresTemplate}
+      </td>`
+    );
+  };
 
   const date = formateDate(getRandomDate());
   const duration = formatTime(getRandomDate());
   const {commentEmojiImage} = options;
+  const genres = createGenreTemplate(genre);
+  const isGenres = genre.length > 1;
 
   return (
     `<section class="film-details">
@@ -62,11 +77,8 @@ const createDetailInfoTemplate = (card, options) => {
                   <td class="film-details__cell">USA</td>
                 </tr>
                 <tr class="film-details__row">
-                  <td class="film-details__term">Genres</td>
-                  <td class="film-details__cell">
-                    <span class="film-details__genre">${genre}</span>
-                    <span class="film-details__genre">Film-Noir</span>
-                    <span class="film-details__genre">Mystery</span></td>
+                  <td class="film-details__term">${isGenres ? `Genres` : `Genre`}</td>
+                  ${genres}
                 </tr>
               </table>
 
@@ -184,95 +196,3 @@ const createDetailInfoTemplate = (card, options) => {
     </section>`
   );
 };
-
-export default class Popup extends AbstractSmartComponent {
-  constructor(card) {
-    super();
-    this._card = card;
-    this._commentEmojiImage = null;
-
-    this._closeHandler = null;
-    this._addToWatchlistHandler = null;
-    this._addToWatchedHandler = null;
-    this._addToFavoritesHandler = null;
-
-    this._subscribeOnEmojiListEvents();
-  }
-
-  getTemplate() {
-    return createDetailInfoTemplate(this._card, {commentEmojiImage: this._commentEmojiImage});
-  }
-
-  setButtonCloseHandler(handler) {
-    this._closeHandler = handler;
-    this._recoverCloseHandler();
-  }
-
-  setAddToWatchlistHandler(handler) {
-    this._addToWatchlistHandler = handler;
-    this._recoverAddToWatchlistHandler();
-  }
-
-  setAddWatchedHandler(handler) {
-    this._addToWatchedHandler = handler;
-    this._recoverAddToWatchedHandler();
-  }
-
-  setAddToFavoritesHandler(handler) {
-    this._addToFavoritesHandler = handler;
-    this._recoverAddToFavoritesHandler();
-  }
-
-  rerender() {
-    super.rerender();
-  }
-
-  _recoverAddToWatchlistHandler() {
-    this
-      .getElement()
-      .querySelector(`.film-details__control-label--watchlist`)
-      .addEventListener(`click`, this._addToWatchlistHandler);
-  }
-
-  _recoverAddToWatchedHandler() {
-    this
-      .getElement()
-      .querySelector(`.film-details__control-label--watched`)
-      .addEventListener(`click`, this._addToWatchedHandler);
-  }
-
-  _recoverAddToFavoritesHandler() {
-    this
-      .getElement()
-      .querySelector(`.film-details__control-label--favorite`)
-      .addEventListener(`click`, this._addToFavoritesHandler);
-  }
-
-  _recoverCloseHandler() {
-    this
-      .getElement()
-      .querySelector(`.film-details__close-btn`)
-      .addEventListener(`click`, this._closeHandler);
-  }
-
-  recoverListeners() {
-    this._subscribeOnEmojiListEvents();
-
-    this._recoverAddToWatchlistHandler();
-    this._recoverAddToWatchedHandler();
-    this._recoverAddToFavoritesHandler();
-    this._recoverCloseHandler();
-  }
-
-  _subscribeOnEmojiListEvents() {
-    this
-      .getElement()
-      .querySelector(`.film-details__emoji-list`)
-      .addEventListener(`change`, (evt) => {
-        evt.preventDefault();
-        this._commentEmojiImage = CommentEmojiImages[evt.target.value];
-        this.rerender();
-      });
-
-  }
-}

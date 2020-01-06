@@ -1,6 +1,6 @@
-import PopupComponent from '../components/detail';
+import PopupComponent from '../components/film-detail/index';
 import RatingComponent from '../components/rating';
-import CardComponent from '../components/card';
+import CardComponent from '../components/card/index';
 import {render, RenderPosition, remove, replace} from '../utils/render';
 
 const FilmMode = {
@@ -14,6 +14,7 @@ export default class MovieController {
 
     this._cardComponent = null;
     this._popupComponent = null;
+    this._ratingComponent = null;
 
     this._card = null;
     this._mode = FilmMode.DEFAULT;
@@ -40,7 +41,10 @@ export default class MovieController {
     this._popupComponent = this._createPopupComponent(this._card);
 
     if (oldCardComponent && oldPopupComponent) {
+      this._cardComponent.turnOnHoverImitation();
       replace(this._cardComponent, oldCardComponent);
+      this._cardComponent.turnOffHoverImitation();
+
       replace(this._popupComponent, oldPopupComponent);
     } else {
       render(this._container, this._cardComponent, RenderPosition.BEFOREEND);
@@ -82,6 +86,8 @@ export default class MovieController {
         this,
         this._card,
         Object.assign({}, this._card, {isAddedToWatch: !this._card.isAddedToWatch}));
+
+    this._showUserratingValue(this._card);
   }
 
   _addToWatchedHandler() {
@@ -98,6 +104,8 @@ export default class MovieController {
         this,
         this._card,
         Object.assign({}, this._card, {isFavorite: !this._card.isFavorite}));
+
+    this._showUserratingValue(this._card);
   }
 
   _showPopup() {
@@ -135,11 +143,11 @@ export default class MovieController {
     if (!this._card.isWatched) {
       return;
     } else {
-      const ratingComponent = new RatingComponent(card);
+      this._ratingComponent = new RatingComponent(card);
       const valueContainer = this
         ._popupComponent.getElement()
         .querySelector(`.form-details__top-container`);
-      render(valueContainer, ratingComponent, RenderPosition.BEFOREEND);
+      render(valueContainer, this._ratingComponent, RenderPosition.BEFOREEND);
     }
   }
 }

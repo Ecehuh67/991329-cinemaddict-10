@@ -34,13 +34,21 @@ export const replaceSort = (container) => {
 };
 
 export const replace = (newComponent, oldComponent) => {
-  const parentElement = oldComponent.getElement().parentElement;
-  const newElement = newComponent.getElement();
-  const oldElement = oldComponent.getElement();
+  replaceElements(newComponent.getElement(), oldComponent.getElement())
+};
+
+export const replaceElements = (newElement, oldElement) => {
+  const parentElement = oldElement.parentElement;
 
   const isExistElements = !!(parentElement && newElement && oldElement);
 
   if (isExistElements && parentElement.contains(oldElement)) {
+    const {scrollTop, scrollLeft} = oldElement;
+
+    newElement.style.animationDuration = `0s`;
     parentElement.replaceChild(newElement, oldElement);
+
+    newElement.scrollTop = scrollTop;
+    newElement.scrollLeft = scrollLeft;
   }
 };
