@@ -148,11 +148,23 @@ export default class PageController {
     }
   }
 
-  _onDataChange(movieController, oldData, newData) {
-    const isSuccess = this._moviesModel.updateCard(oldData.id, newData);
+  _updateCards(count) {
+    this._removeCards();
+    this._renderCards(this._moviesModel.getCards().slice(0, count));
+    this._renderLoadMoreButton();
+  }
 
-    if (isSuccess) {
-      movieController.render(newData);
+  _onDataChange(movieController, oldData, newData) {
+    if (newData === null) {
+      this._moviesModel.removeCard(oldData.id);
+      this._updateCards(this._showingCardCount);
+
+    } else {
+      const isSuccess = this._moviesModel.updateCard(oldData.id, newData);
+
+      if (isSuccess) {
+        movieController.render(newData);
+      }
     }
   }
 

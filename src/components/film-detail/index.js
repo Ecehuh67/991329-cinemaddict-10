@@ -41,6 +41,16 @@ export default class Popup extends AbstractSmartComponent {
     this._recoverAddToFavoritesHandler();
   }
 
+  setDeleteCommentButtonHandler(handler) {
+    this
+      .getElement()
+      .querySelectorAll(`.film-details__comment-delete`)
+      .forEach((button) => button.addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        handler();
+      }));
+  }
+
   rerender() {
     super.rerender();
   }

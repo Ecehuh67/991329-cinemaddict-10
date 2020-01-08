@@ -3,17 +3,8 @@ import CardComponent from '../components/card/index';
 import {render, RenderPosition, remove, replace} from '../utils/render';
 
 const FilmMode = {
-  ADDING: `adding`,
   DEFAULT: `default`,
-  DETAILS: `details`,
-};
-
-const NewComment = {
-  author: ``,
-  text: ``,
-  emoji: ``,
-  date: ``,
-  deleteButton: ``
+  DETAILS: `details`
 };
 
 export default class MovieController {
@@ -36,6 +27,7 @@ export default class MovieController {
     this._addToWatchlistHandler = this._addToWatchlistHandler.bind(this);
     this._addToWatchedHandler = this._addToWatchedHandler.bind(this);
     this._addToFavoritesHandler = this._addToFavoritesHandler.bind(this);
+    this._deleteCommentButtonHandler = this._deleteCommentButtonHandler.bind(this);
   }
 
   render(card) {
@@ -76,6 +68,7 @@ export default class MovieController {
     popupComponent.setAddToWatchlistHandler(this._addToWatchlistHandler);
     popupComponent.setAddWatchedHandler(this._addToWatchedHandler);
     popupComponent.setAddToFavoritesHandler(this._addToFavoritesHandler);
+    popupComponent.setDeleteCommentButtonHandler(this._deleteCommentButtonHandler);
 
     return popupComponent;
   }
@@ -107,6 +100,10 @@ export default class MovieController {
         this,
         this._card,
         Object.assign({}, this._card, {isFavorite: !this._card.isFavorite}));
+  }
+
+  _deleteCommentButtonHandler() {
+    this._onDataChange(this, this._card, null);
   }
 
   _showPopup() {
