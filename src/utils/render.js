@@ -34,7 +34,7 @@ export const replaceSort = (container) => {
 };
 
 export const replace = (newComponent, oldComponent) => {
-  replaceElements(newComponent.getElement(), oldComponent.getElement())
+  replaceElements(newComponent.getElement(), oldComponent.getElement());
 };
 
 export const replaceElements = (newElement, oldElement) => {

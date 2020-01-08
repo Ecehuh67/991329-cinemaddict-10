@@ -1,13 +1,25 @@
 import {
-  getRandomArrayItem, getRandomArray, getRandomNumberPointNotation, getRandomArrayNumber, getTime, getRandomNumber, generateComment
+  getRandomArrayItem, getRandomArray, getRandomNumberPointNotation, getRandomArrayNumber, getTime, getRandomNumber
 } from '../utils/common';
 
 import {filmsList, postersList, descriptionsOfFilm, genres, comments} from './consts';
+import {formateDate} from '../utils/common';
+
+const randomLengthArray = getRandomArray(descriptionsOfFilm);
+const randomGenres = getRandomNumber(genres.length - 1);
+
+const generateComments = (commentaries) =>
+  commentaries
+  .slice(getRandomArrayNumber(0, commentaries.length))
+  .map((comment) =>
+    ({
+      text: comment,
+      author: `Karl Lindstrom`,
+      date: formateDate(new Date())
+    })
+  );
 
 const generateCard = () => {
-  const randomLengthArray = getRandomArray(descriptionsOfFilm);
-  const randomGenres = getRandomNumber(genres.length - 1);
-
   return {
     title: getRandomArrayItem(filmsList),
     rate: getRandomNumberPointNotation(Math.random() * 10),
@@ -19,8 +31,9 @@ const generateCard = () => {
     isAddedToWatch: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
     isFavorite: Math.random() > 0.5,
-    comments: getRandomNumber(10),
-    popupComments: generateComment(comments)
+    comments: generateComments(comments),
+    userRating: getRandomNumber(9),
+    id: getRandomNumber(100000)
   };
 };
 

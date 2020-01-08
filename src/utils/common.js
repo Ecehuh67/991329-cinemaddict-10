@@ -42,14 +42,6 @@ export const getRank = (count) => {
   return rank;
 };
 
-export const generateComment = (comments) => {
-  return {
-    text: getRandomArrayItem(comments),
-    author: `John Doe`,
-    data: `2019/12/31 23:59`
-  };
-};
-
 export const formateDate = (date) => {
   return moment(date).format(`DD MMMM YYYY`);
 };

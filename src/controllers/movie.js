@@ -1,11 +1,19 @@
 import PopupComponent from '../components/film-detail/index';
-import RatingComponent from '../components/rating';
 import CardComponent from '../components/card/index';
 import {render, RenderPosition, remove, replace} from '../utils/render';
 
 const FilmMode = {
+  ADDING: `adding`,
   DEFAULT: `default`,
   DETAILS: `details`,
+};
+
+const NewComment = {
+  author: ``,
+  text: ``,
+  emoji: ``,
+  date: ``,
+  deleteButton: ``
 };
 
 export default class MovieController {
@@ -28,7 +36,6 @@ export default class MovieController {
     this._addToWatchlistHandler = this._addToWatchlistHandler.bind(this);
     this._addToWatchedHandler = this._addToWatchedHandler.bind(this);
     this._addToFavoritesHandler = this._addToFavoritesHandler.bind(this);
-    this._showUserratingValue = this._showUserratingValue.bind(this);
   }
 
   render(card) {
@@ -86,8 +93,6 @@ export default class MovieController {
         this,
         this._card,
         Object.assign({}, this._card, {isAddedToWatch: !this._card.isAddedToWatch}));
-
-    this._showUserratingValue(this._card);
   }
 
   _addToWatchedHandler() {
@@ -95,8 +100,6 @@ export default class MovieController {
         this,
         this._card,
         Object.assign({}, this._card, {isWatched: !this._card.isWatched}));
-
-    this._showUserratingValue(this._card);
   }
 
   _addToFavoritesHandler() {
@@ -104,8 +107,6 @@ export default class MovieController {
         this,
         this._card,
         Object.assign({}, this._card, {isFavorite: !this._card.isFavorite}));
-
-    this._showUserratingValue(this._card);
   }
 
   _showPopup() {
@@ -119,7 +120,6 @@ export default class MovieController {
     this._popupComponent = this._createPopupComponent(this._card);
 
     render(bodyElement, this._popupComponent, RenderPosition.BEFOREEND);
-    this._showUserratingValue(this._card);
 
     document.addEventListener(`keydown`, this._onEscKeyDown);
 
@@ -139,15 +139,8 @@ export default class MovieController {
     }
   }
 
-  _showUserratingValue(card) {
-    if (!this._card.isWatched) {
-      return;
-    } else {
-      this._ratingComponent = new RatingComponent(card);
-      const valueContainer = this
-        ._popupComponent.getElement()
-        .querySelector(`.form-details__top-container`);
-      render(valueContainer, this._ratingComponent, RenderPosition.BEFOREEND);
-    }
+  destroy() {
+    remove(this._cardComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 }

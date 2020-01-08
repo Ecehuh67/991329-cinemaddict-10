@@ -1,30 +1,25 @@
-const filters = [`All`, `Watchlist`, `History`, `Favorites`];
+import {Filters} from './consts';
 
+const getAllCards = (cards) => cards;
 
-export const generateFilters = (cards) => {
-  let index = 0;
+const getWatchlistCards = (cards) => cards.filter((card) => card.isAddedToWatch);
 
-  return filters.map((it) => {
-    switch (it) {
-      case `All`:
-        index = cards.length;
-        break;
-      case `Watchlist`:
-        index = cards.filter((card) => card.isWatched).length;
-        break;
-      case `History`:
-        index = cards.filter((card) => card.isLookingThrough).length;
-        break;
-      case `Favorites`:
-        index = cards.filter((card) => card.isFavorites).length;
-        break;
-      default:
-        index = ``;
-    }
+const getHistoryCards = (cards) => cards.filter((card) => card.isWatched);
 
-    return {
-      title: it,
-      count: index
-    };
-  });
+const getFavoritesCards = (cards) => cards.filter((card) => card.isFavorite);
+
+export const getCardsByFilter = (cards, filterType) => {
+
+  switch (filterType) {
+    case Filters.ALL:
+      return getAllCards(cards);
+    case Filters.WATCHLIST:
+      return getWatchlistCards(cards);
+    case Filters.HISTORY:
+      return getHistoryCards(cards);
+    case Filters.FAVORITES:
+      return getFavoritesCards(cards);
+  }
+
+  return cards;
 };

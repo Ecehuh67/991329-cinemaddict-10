@@ -1,16 +1,16 @@
 const createFilterMarkup = (filter, isActive) => {
-  const {title, count} = filter;
+  const {name, count} = filter;
 
   return (
-    `<a href="#${title}" class="main-navigation__item
-    ${isActive ? `main-navigation__item--active` : ``}">${title}
+    `<a href="#${name}" class="main-navigation__item
+    ${isActive ? `main-navigation__item--active` : ``}" id="filter__${name}">${name}
       <span class="main-navigation__item-count">${count}</span>
     </a>`
   );
 };
 
 export const createFiltersTemplate = (filters) => {
-  const filtersMarkup = filters.map((it, i) => createFilterMarkup(it, i === 0)).join(`\n`);
+  const filtersMarkup = filters.map((it, i) => createFilterMarkup(it, it.checked)).join(`\n`);
 
   return (
     `<nav class="main-navigation">
