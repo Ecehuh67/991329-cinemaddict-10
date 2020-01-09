@@ -156,8 +156,16 @@ export default class PageController {
 
   _onDataChange(movieController, oldData, newData) {
     if (newData === null) {
-      this._moviesModel.removeCard(oldData.id);
+      const card = oldData;
+      const index = oldData.comments.findIndex((it) => it.text === movieController._deleteElement);
+
+      const newComments = card.comments.filter((_,i) => i !== index );
+
+      card.comments = newComments;
+
       this._updateCards(this._showingCardCount);
+
+      movieController.render(card);
 
     } else {
       const isSuccess = this._moviesModel.updateCard(oldData.id, newData);
@@ -176,6 +184,10 @@ export default class PageController {
     this._removeCards();
     this._renderCards(this._moviesModel.getCards().slice(0, SHOWING_CARD));
     this._renderLoadMoreButton();
+  }
+
+  _updateComments(card, deletedComment) {
+
   }
 
   _onLoadMoreButtonClick() {

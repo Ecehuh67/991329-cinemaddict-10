@@ -14,6 +14,7 @@ export default class MovieController {
     this._cardComponent = null;
     this._popupComponent = null;
     this._ratingComponent = null;
+    this._deleteElement = null;
 
     this._card = null;
     this._mode = FilmMode.DEFAULT;
@@ -103,6 +104,7 @@ export default class MovieController {
   }
 
   _deleteCommentButtonHandler() {
+    this._deleteElement = this._popupComponent._deleteElement.querySelector(`.film-details__comment-text`).textContent;
     this._onDataChange(this, this._card, null);
   }
 

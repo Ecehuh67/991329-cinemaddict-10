@@ -13,6 +13,7 @@ export default class Popup extends AbstractSmartComponent {
     this._addToWatchlistHandler = null;
     this._addToWatchedHandler = null;
     this._addToFavoritesHandler = null;
+    this._deleteElement = null;
 
     this._subscribeOnEmojiListEvents();
   }
@@ -44,12 +45,28 @@ export default class Popup extends AbstractSmartComponent {
   setDeleteCommentButtonHandler(handler) {
     this
       .getElement()
-      .querySelectorAll(`.film-details__comment-delete`)
-      .forEach((button) => button.addEventListener(`click`, (evt) => {
-        evt.preventDefault();
-        handler();
+      .querySelectorAll(`.film-details__comment`)
+      .forEach((li) => li.addEventListener(`click`, (evt) => {
+        const deleteButton = li.querySelector(`.film-details__comment-delete`);
+        if (evt.target === deleteButton) {
+          evt.preventDefault();
+          this._deleteElement = evt.currentTarget;
+          handler();
+        } else {
+          return;
+        }
       }));
   }
+
+  // setDeleteCommentButtonHandler(handler) {
+  //   this
+  //     .getElement()
+  //     .querySelectorAll(`.film-details__comment-delete`)
+  //     .forEach((button) => button.addEventListener(`click`, (evt) => {
+  //       evt.preventDefault();
+  //       handler();
+  //     }));
+  // }
 
   rerender() {
     super.rerender();
