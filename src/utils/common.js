@@ -38,8 +38,29 @@ export const getConditionFilms = (cards, amount, category) => {
   return newCards;
 };
 
+// export const getRank = (count) => {
+//   let rank = ranks[Object.keys(ranks).find((it) => count <= it)];
+//   return rank;
+// };
+
 export const getRank = (count) => {
-  let rank = ranks[Object.keys(ranks).find((it) => count <= it)];
+  let rank;
+
+  switch (true) {
+    case count === 0:
+      rank = ``;
+      break;
+    case count > 0 && count <= 10:
+      rank = `novice`;
+      break;
+    case count > 10 && count <= 20:
+      rank = `fan`;
+      break;
+    case count > 20:
+      rank = `movie buff`;
+      break;
+  }
+
   return rank;
 };
 
