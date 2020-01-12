@@ -1,4 +1,3 @@
-import {ranks} from '../mocks/consts';
 import moment from 'moment';
 
 export const getRandomArrayItem = (array) => {
@@ -34,20 +33,34 @@ export const getTime = () => {
 export const getConditionFilms = (cards, amount, category) => {
   const values = cards.map((card) => card[category]).sort((a, b) => a - b).slice(-amount);
   const newCards = cards.filter((card) => values.find((it) => it === card[category])).slice(-amount);
+
   return newCards;
 };
 
-export const getRank = (count) => {
-  let rank = ranks[Object.keys(ranks).find((it) => count <= it)];
-  return rank;
-};
+// export const getRank = (count) => {
+//   let rank = ranks[Object.keys(ranks).find((it) => count <= it)];
+//   return rank;
+// };
 
-export const generateComment = (comments) => {
-  return {
-    text: getRandomArrayItem(comments),
-    author: `John Doe`,
-    data: `2019/12/31 23:59`
-  };
+export const getRank = (count) => {
+  let rank;
+
+  switch (true) {
+    case count === 0:
+      rank = ``;
+      break;
+    case count > 0 && count <= 10:
+      rank = `novice`;
+      break;
+    case count > 10 && count <= 20:
+      rank = `fan`;
+      break;
+    case count > 20:
+      rank = `movie buff`;
+      break;
+  }
+
+  return rank;
 };
 
 export const formateDate = (date) => {

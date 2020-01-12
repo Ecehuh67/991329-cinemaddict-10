@@ -1,11 +1,12 @@
-import RankComponent from './components/user-rank';
-import FilterComponent from './components/filters';
-import SortComponent, {SortType} from './components/sort';
-import ContainerComponent from './components/film-container';
+import RankComponent from './components/user-rank/index';
+import FilterComponent from './components/filters/index';
+import ContainerComponent from './components/film-container/index';
 import PageController, {renderCards, showingCardCount} from './controllers/page';
+import FilterController from './controllers/filter';
+import MoviesModel from './models/movies';
 import {generateCards} from './mocks/card';
 import {generateFilters} from './mocks/filter';
-import {getRandomNumber} from './utils/common';
+import {getRandomNumber, getRank} from './utils/common';
 import {render, RenderPosition, replaceSort} from './utils/render';
 
 const FILM_COUNT = 15;
@@ -14,20 +15,22 @@ const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
 
 // Randomly generate a number for getting Rate of user
-const randomRate = getRandomNumber(90);
+const randomRate = getRandomNumber(25);
 render(headerElement, new RankComponent(randomRate), RenderPosition.BEFOREEND);
 
 const cards = generateCards(FILM_COUNT);
-const filters = generateFilters(cards);
+const moviesModel = new MoviesModel();
+moviesModel.setCards(cards);
 
-render(mainElement, new FilterComponent(filters), RenderPosition.BEFOREEND);
+const filterController = new FilterController(mainElement, moviesModel);
+filterController.render();
 
 const containerComponent = new ContainerComponent();
 render(mainElement, containerComponent, RenderPosition.BEFOREEND);
 
-const pageController = new PageController(containerComponent);
+const pageController = new PageController(containerComponent, moviesModel);
 
-pageController.render(cards);
+pageController.render();
 
 replaceSort(mainElement);
 

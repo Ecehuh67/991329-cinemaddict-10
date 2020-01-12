@@ -1,3 +1,5 @@
+export const USER_RATING_COUNT = 9;
+
 export const filmsList = [
   `The Shawshank Redemption`,
   `The Green Mile `,
@@ -38,24 +40,21 @@ export const postersList = [
   `./images/posters/the-man-with-the-golden-arm.jpg`
 ];
 
-export const comments = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-  Cras aliquet varius magna, non porta ligula feugiat eget.
-  Fusce tristique felis at fermentum pharetra.
-  Aliquam id orci ut lectus varius viverra.
-  Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.
-  Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.
-  Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.
-  Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat.
-  Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`
-  .split(`.`);
+export const comments = [
+  `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
+  `Cras aliquet varius magna, non porta ligula feugiat eget.`,
+  `Fusce tristique felis at fermentum pharetra.`,
+  `Aliquam id orci ut lectus varius viverra.`,
+  `Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.`,
+  `Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.`,
+  `Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.`,
+  `Sed sed nisi sed augue convallis suscipit in sed felis.`,
+  `Aliquam erat volutpat.`,
+  `Nunc fermentum tortor ac porta dapibus.`,
+  `In rutrum ac purus sit amet tempus.`
+];
 
 export const genres = [`Musical`, `Documental`, `Action`, `Horror`, `Drama`, `Comedy`];
-
-export const ranks = {
-  10: `beginner`,
-  30: `cineman`,
-  80: `movie buff`
-};
 
 export const rubricsForTop = [`Top rated`, `Most commented`];
 
@@ -64,4 +63,11 @@ export const CommentEmojiImages = {
   'sleeping': `sleeping.png`,
   'puke': `puke.png`,
   'angry': `angry.png`
+};
+
+export const Filters = {
+  ALL: `All`,
+  WATCHLIST: `Watchlist`,
+  HISTORY: `History`,
+  FAVORITES: `Favorites`
 };
