@@ -72,4 +72,4 @@ export const Filters = {
   FAVORITES: `Favorites`
 };
 
-const v = fff;
+export const v = `fff`;
