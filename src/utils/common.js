@@ -1,4 +1,3 @@
-import {ranks} from '../mocks/consts';
 import moment from 'moment';
 
 export const getRandomArrayItem = (array) => {

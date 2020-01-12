@@ -56,12 +56,6 @@ export const comments = [
 
 export const genres = [`Musical`, `Documental`, `Action`, `Horror`, `Drama`, `Comedy`];
 
-export const ranks = {
-  10: `novice`,
-  20: `fan`,
-  21: `movie buff`
-};
-
 export const rubricsForTop = [`Top rated`, `Most commented`];
 
 export const CommentEmojiImages = {
