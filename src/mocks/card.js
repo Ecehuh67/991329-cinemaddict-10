@@ -20,6 +20,8 @@ const generateComments = (commentaries) =>
   );
 
 const generateCard = () => {
+  const commentsList = generateComments(comments);
+
   return {
     title: getRandomArrayItem(filmsList),
     rate: getRandomNumberPointNotation(Math.random() * 10),
@@ -31,9 +33,11 @@ const generateCard = () => {
     isAddedToWatch: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
     isFavorite: Math.random() > 0.5,
-    comments: generateComments(comments),
+    comments: commentsList,
+    commentCount: commentsList.length,
     userRating: getRandomNumber(9),
-    id: getRandomNumber(100000)
+    id: getRandomNumber(100000),
+    emoji: null
   };
 };
 

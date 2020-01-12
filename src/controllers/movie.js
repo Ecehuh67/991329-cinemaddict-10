@@ -15,6 +15,7 @@ export default class MovieController {
     this._popupComponent = null;
     this._ratingComponent = null;
     this._deleteElement = null;
+    this._textCommentValue = null;
 
     this._card = null;
     this._mode = FilmMode.DEFAULT;
@@ -29,6 +30,7 @@ export default class MovieController {
     this._addToWatchedHandler = this._addToWatchedHandler.bind(this);
     this._addToFavoritesHandler = this._addToFavoritesHandler.bind(this);
     this._deleteCommentButtonHandler = this._deleteCommentButtonHandler.bind(this);
+    this._addNewCommentHandler = this._addNewCommentHandler.bind(this);
   }
 
   render(card) {
@@ -70,6 +72,7 @@ export default class MovieController {
     popupComponent.setAddWatchedHandler(this._addToWatchedHandler);
     popupComponent.setAddToFavoritesHandler(this._addToFavoritesHandler);
     popupComponent.setDeleteCommentButtonHandler(this._deleteCommentButtonHandler);
+    popupComponent.setCreateNewCommentHandler(this._addNewCommentHandler);
 
     return popupComponent;
   }
@@ -106,6 +109,12 @@ export default class MovieController {
   _deleteCommentButtonHandler() {
     this._deleteElement = this._popupComponent._deleteElement.querySelector(`.film-details__comment-text`).textContent;
     this._onDataChange(this, this._card, null);
+  }
+
+  _addNewCommentHandler() {
+    this._textCommentValue = this._popupComponent._textValue;
+    this._onDataChange(this, null, this._card);
+    document.addEventListener(`keydown`, this._onEscKeyDown);
   }
 
   _showPopup() {

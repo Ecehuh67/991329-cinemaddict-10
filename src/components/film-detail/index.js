@@ -13,7 +13,10 @@ export default class Popup extends AbstractSmartComponent {
     this._addToWatchlistHandler = null;
     this._addToWatchedHandler = null;
     this._addToFavoritesHandler = null;
+    this._addNewCommentHandler = null;
+    this._deleteButtomHandler = null;
     this._deleteElement = null;
+    this._textValue = null;
 
     this._subscribeOnEmojiListEvents();
   }
@@ -43,6 +46,20 @@ export default class Popup extends AbstractSmartComponent {
   }
 
   setDeleteCommentButtonHandler(handler) {
+    this._deleteButtomHandler = handler;
+    this._recoverDeleteButtomHandler();
+  }
+
+  setCreateNewCommentHandler(handler) {
+    this._addNewCommentHandler = handler;
+    this._recoverAddNewCommentHandler();
+  }
+
+  rerender() {
+    super.rerender();
+  }
+
+  _recoverDeleteButtomHandler() {
     this
       .getElement()
       .querySelectorAll(`.film-details__comment`)
@@ -51,25 +68,28 @@ export default class Popup extends AbstractSmartComponent {
         if (evt.target === deleteButton) {
           evt.preventDefault();
           this._deleteElement = evt.currentTarget;
-          handler();
+          this._deleteButtomHandler();
         } else {
           return;
         }
       }));
   }
 
-  // setDeleteCommentButtonHandler(handler) {
-  //   this
-  //     .getElement()
-  //     .querySelectorAll(`.film-details__comment-delete`)
-  //     .forEach((button) => button.addEventListener(`click`, (evt) => {
-  //       evt.preventDefault();
-  //       handler();
-  //     }));
-  // }
-
-  rerender() {
-    super.rerender();
+  _recoverAddNewCommentHandler() {
+    this
+      .getElement()
+      .querySelector(`.film-details__comment-input`).
+      addEventListener(`keydown`, (evt) => {
+        const isSubmit = evt.keyCode === 13 && evt.ctrlKey || evt.keyCode === 13 && evt.metaKey;
+        if (isSubmit) {
+          const textValue = evt.target.value;
+          if (textValue) {
+            this._card.comments.push({text: evt.target.value, author: `Karl Kugel`, date: `2019/12/31 23:59`});
+            this._card.emoji = this._commentEmojiImage;
+          }
+          this._addNewCommentHandler();
+        }
+      });
   }
 
   _recoverAddToWatchlistHandler() {
@@ -103,6 +123,8 @@ export default class Popup extends AbstractSmartComponent {
   recoverListeners() {
     this._subscribeOnEmojiListEvents();
 
+    this._recoverDeleteButtomHandler();
+    this._recoverAddNewCommentHandler()
     this._recoverAddToWatchlistHandler();
     this._recoverAddToWatchedHandler();
     this._recoverAddToFavoritesHandler();

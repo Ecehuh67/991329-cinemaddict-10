@@ -41,7 +41,7 @@ const renderTopListFilms = (container, cards, onDataChange, onViewChange) => {
         renderCards(it, ratedCards, onDataChange, onViewChange);
         break;
       case `Most commented`:
-        const commentedCards = getConditionFilms(cards, FILM_POPULAR, `comments`);
+        const commentedCards = getConditionFilms(cards, FILM_POPULAR, `commentCount`);
         renderCards(it, commentedCards, onDataChange, onViewChange);
         break;
     }
@@ -159,13 +159,19 @@ export default class PageController {
       const card = oldData;
       const index = oldData.comments.findIndex((it) => it.text === movieController._deleteElement);
 
-      const newComments = card.comments.filter((_,i) => i !== index );
+      const newComments = card.comments.filter((_, i) => i !== index);
 
       card.comments = newComments;
 
       this._updateCards(this._showingCardCount);
 
       movieController.render(card);
+
+    } else if (oldData === null) {
+
+      this._updateCards(this._showingCardCount);
+
+      movieController.render(newData);
 
     } else {
       const isSuccess = this._moviesModel.updateCard(oldData.id, newData);
@@ -184,10 +190,6 @@ export default class PageController {
     this._removeCards();
     this._renderCards(this._moviesModel.getCards().slice(0, SHOWING_CARD));
     this._renderLoadMoreButton();
-  }
-
-  _updateComments(card, deletedComment) {
-
   }
 
   _onLoadMoreButtonClick() {

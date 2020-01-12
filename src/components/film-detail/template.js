@@ -2,8 +2,8 @@ import {formateDate, formatTime, getRandomDate} from '../../utils/common';
 import {createCommentsMarkup} from './comments';
 import {generateUserRatingMarkup} from './user-rating';
 
-export const createDetailInfoTemplate = (card, options) => {
-  const {title, rate, genre, poster, description, comments, isAddedToWatch, isWatched, isFavorite, userRating} = card;
+export const createDetailInfoTemplate = (card, options, point) => {
+  const {title, rate, genre, poster, description, comments, isAddedToWatch, isWatched, isFavorite, userRating, emoji} = card;
 
   const createGenresmarkup = (genres) => {
     return (
@@ -26,7 +26,8 @@ export const createDetailInfoTemplate = (card, options) => {
   const {commentEmojiImage} = options;
   const genres = createGenreTemplate(genre);
   const isGenres = genre.length > 1;
-  const commentsMarkup = createCommentsMarkup(comments);
+
+  const commentsMarkup = createCommentsMarkup(comments, emoji);
   const userRatingMarkup = generateUserRatingMarkup(userRating);
 
   return (

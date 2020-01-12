@@ -34,6 +34,7 @@ export const getTime = () => {
 export const getConditionFilms = (cards, amount, category) => {
   const values = cards.map((card) => card[category]).sort((a, b) => a - b).slice(-amount);
   const newCards = cards.filter((card) => values.find((it) => it === card[category])).slice(-amount);
+
   return newCards;
 };
 
