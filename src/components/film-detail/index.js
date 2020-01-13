@@ -21,7 +21,7 @@ export default class Popup extends AbstractSmartComponent {
     this._deleteElement = null;
     this._textValue = null;
 
-    this._subscribeOnEmojiListEvents();
+    // this._subscribeOnEmojiListEvents();
   }
 
   getTemplate() {
@@ -55,7 +55,9 @@ export default class Popup extends AbstractSmartComponent {
 
   setCreateNewCommentHandler(handler) {
     this._addNewCommentHandler = handler;
-    this._recoverAddNewCommentHandler();
+
+    this._subscribeOnEmojiListEvents();
+    // this._recoverAddNewCommentHandler();
   }
 
   rerender() {
@@ -140,6 +142,9 @@ export default class Popup extends AbstractSmartComponent {
       .addEventListener(`change`, (evt) => {
         evt.preventDefault();
         this._commentEmojiImage = CommentEmojiImages[evt.target.value];
+
+        this._recoverAddNewCommentHandler();
+
         this._textValue = he.encode(this._getUserCommentInput().value);
 
         this.rerender();
