@@ -3,6 +3,8 @@ import {CommentEmojiImages} from '../../mocks/consts';
 import {createDetailInfoTemplate} from './template';
 import he from 'he';
 
+const ENTER_KEYCODE = 13;
+
 export default class Popup extends AbstractSmartComponent {
   constructor(card) {
     super();
@@ -85,7 +87,7 @@ export default class Popup extends AbstractSmartComponent {
       .getElement()
       .querySelector(`.film-details__comment-input`).
       addEventListener(`keydown`, (evt) => {
-        const isSubmit = evt.keyCode === 13 && evt.ctrlKey || evt.keyCode === 13 && evt.metaKey;
+        const isSubmit = evt.keyCode === ENTER_KEYCODE && evt.ctrlKey || evt.keyCode === ENTER_KEYCODE && evt.metaKey;
         if (isSubmit) {
           this._textValue = he.encode(evt.target.value);
           if (this._textValue) {
