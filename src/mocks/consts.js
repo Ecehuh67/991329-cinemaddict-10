@@ -71,5 +71,3 @@ export const Filters = {
   HISTORY: `History`,
   FAVORITES: `Favorites`
 };
-
-export const v = `fff`;
