@@ -3,7 +3,7 @@ import {createCommentsMarkup} from './comments';
 import {generateUserRatingMarkup} from './user-rating';
 
 export const createDetailInfoTemplate = (card, options, point) => {
-  const {title, rate, genre, poster, description, comments, isAddedToWatch, isWatched, isFavorite, userRating, emoji} = card;
+  const {title, rate, genre, poster, description, comments, isAddedToWatch, isWatched, isFavorite, userRating} = card;
 
   const createGenresmarkup = (genres) => {
     return (
@@ -27,7 +27,9 @@ export const createDetailInfoTemplate = (card, options, point) => {
   const genres = createGenreTemplate(genre);
   const isGenres = genre.length > 1;
 
-  const commentsMarkup = createCommentsMarkup(comments, emoji);
+  const newDescription = description.length > 139 ? description.substring(0, 139).concat(`...`) : ``;
+
+  const commentsMarkup = createCommentsMarkup(comments);
   const userRatingMarkup = generateUserRatingMarkup(userRating);
 
   return (
@@ -88,7 +90,7 @@ export const createDetailInfoTemplate = (card, options, point) => {
               </table>
 
               <p class="film-details__film-description">
-                ${description}
+                ${newDescription ? newDescription : description}
               </p>
             </div>
           </div>

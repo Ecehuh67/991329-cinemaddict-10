@@ -1,6 +1,9 @@
 import AbstractSmartComponent from '../abstract-components/smart-component';
 import {CommentEmojiImages} from '../../mocks/consts';
 import {createDetailInfoTemplate} from './template';
+import he from 'he';
+
+const ENTER_KEYCODE = 13;
 
 export default class Popup extends AbstractSmartComponent {
   constructor(card) {
@@ -8,6 +11,8 @@ export default class Popup extends AbstractSmartComponent {
 
     this._card = card;
     this._commentEmojiImage = null;
+    this._textValue = null;
+    this._textElement = null;
 
     this._closeHandler = null;
     this._addToWatchlistHandler = null;
@@ -18,7 +23,7 @@ export default class Popup extends AbstractSmartComponent {
     this._deleteElement = null;
     this._textValue = null;
 
-    this._subscribeOnEmojiListEvents();
+    // this._subscribeOnEmojiListEvents();
   }
 
   getTemplate() {
@@ -52,7 +57,9 @@ export default class Popup extends AbstractSmartComponent {
 
   setCreateNewCommentHandler(handler) {
     this._addNewCommentHandler = handler;
-    this._recoverAddNewCommentHandler();
+
+    this._subscribeOnEmojiListEvents();
+    // this._recoverAddNewCommentHandler();
   }
 
   rerender() {
@@ -80,12 +87,11 @@ export default class Popup extends AbstractSmartComponent {
       .getElement()
       .querySelector(`.film-details__comment-input`).
       addEventListener(`keydown`, (evt) => {
-        const isSubmit = evt.keyCode === 13 && evt.ctrlKey || evt.keyCode === 13 && evt.metaKey;
+        const isSubmit = evt.keyCode === ENTER_KEYCODE && evt.ctrlKey || evt.keyCode === ENTER_KEYCODE && evt.metaKey;
         if (isSubmit) {
-          const textValue = evt.target.value;
-          if (textValue) {
-            this._card.comments.push({text: evt.target.value, author: `Karl Kugel`, date: `2019/12/31 23:59`});
-            this._card.emoji = this._commentEmojiImage;
+          this._textValue = he.encode(evt.target.value);
+          if (this._textValue) {
+            this._card.comments.push({text: this._textValue, author: `Karl Kugel`, date: `2019/12/31 23:59`, emojiImage: this._commentEmojiImage});
           }
           this._addNewCommentHandler();
         }
@@ -138,8 +144,20 @@ export default class Popup extends AbstractSmartComponent {
       .addEventListener(`change`, (evt) => {
         evt.preventDefault();
         this._commentEmojiImage = CommentEmojiImages[evt.target.value];
+
+        this._recoverAddNewCommentHandler();
+
+        this._textValue = he.encode(this._getUserCommentInput().value);
+
         this.rerender();
+        console.log(this._textValue);
+
+        this._getUserCommentInput().value = this._textValue;
       });
 
+  }
+
+  _getUserCommentInput() {
+    return this._textElement = this.getElement().querySelector(`.film-details__comment-input`);
   }
 }

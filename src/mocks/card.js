@@ -29,7 +29,7 @@ const generateCard = () => {
     duration: getTime(),
     genre: genres.slice(randomGenres, randomGenres + 3),
     poster: getRandomArrayItem(postersList),
-    description: descriptionsOfFilm.slice(randomLengthArray[0], randomLengthArray[1]),
+    description: descriptionsOfFilm.slice(randomLengthArray[0], randomLengthArray[1]).join(`\n`),
     isAddedToWatch: Math.random() > 0.5,
     isWatched: Math.random() > 0.5,
     isFavorite: Math.random() > 0.5,
