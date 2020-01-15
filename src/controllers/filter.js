@@ -42,11 +42,19 @@ export default class FilterController {
   }
 
   _onFilterChange(filterType) {
+    const oldFilter = this._activeFilterType;
+
     this._moviesModel.setFilter(filterType);
     this._activeFilterType = filterType;
+
+    this._filterComponent.setActive(oldFilter, this._activeFilterType);
   }
 
   _onDataChange() {
     this.render();
+  }
+
+  showScreen(handler) {
+    this._filterComponent.setFilterChangeHandler(handler);
   }
 }
