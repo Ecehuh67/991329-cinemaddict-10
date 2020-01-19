@@ -3,6 +3,7 @@ import {MenuItem} from './components/filters/index';
 import ContainerComponent from './components/film-container/index';
 import PageController, {renderCards, showingCardCount} from './controllers/page';
 import FilterController from './controllers/filter';
+import FilterComponent from './components/filters/index';
 import MoviesModel from './models/movies';
 import StatisticsComponent from './components/statistics/index';
 import {generateCards} from './mocks/card';
@@ -11,6 +12,8 @@ import {getRandomNumber, getRank} from './utils/common';
 import {render, RenderPosition, replaceSort} from './utils/render';
 
 const FILM_COUNT = 15;
+
+console.log([])
 
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
@@ -34,7 +37,7 @@ const pageController = new PageController(containerComponent, moviesModel);
 pageController.render();
 replaceSort(mainElement);
 
-const statisticsComponent = new StatisticsComponent();
+const statisticsComponent = new StatisticsComponent(moviesModel, getRank(randomRate));
 render(mainElement, statisticsComponent, RenderPosition.BEFOREEND);
 statisticsComponent.hide();
 

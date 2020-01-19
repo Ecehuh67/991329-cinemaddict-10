@@ -6,7 +6,8 @@ import {filmsList, postersList, descriptionsOfFilm, genres, comments} from './co
 import {formateDate} from '../utils/common';
 
 const randomLengthArray = getRandomArray(descriptionsOfFilm);
-const randomGenres = getRandomNumber(genres.length - 1);
+
+const getRandomGenres = () => getRandomNumber(genres.length - 1);
 
 const generateComments = (commentaries) =>
   commentaries
@@ -21,13 +22,14 @@ const generateComments = (commentaries) =>
 
 const generateCard = () => {
   const commentsList = generateComments(comments);
+  const listGenres = getRandomGenres();
 
   return {
     title: getRandomArrayItem(filmsList),
     rate: getRandomNumberPointNotation(Math.random() * 10),
     year: getRandomArrayNumber(1900, 2020),
     duration: getTime(),
-    genre: genres.slice(randomGenres, randomGenres + 3),
+    genre: genres.slice(listGenres, listGenres + 3),
     poster: getRandomArrayItem(postersList),
     description: descriptionsOfFilm.slice(randomLengthArray[0], randomLengthArray[1]).join(`\n`),
     isAddedToWatch: Math.random() > 0.5,
