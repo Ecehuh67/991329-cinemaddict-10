@@ -8,6 +8,16 @@ const getFilterNameById = (id) => {
   return id.substring(FILTER_ID_PREFIX.length);
 };
 
+export const MenuItem = {
+  ALL: `All`,
+  WATCHLIST: `Watchlist`,
+  HISTOTY: `History`,
+  FAVORITES: `Favorites`,
+  STATS: `Statistics`
+};
+
+const ACTIVE_FILTER_CLASS = `main-navigation__item--active`;
+
 export default class Filter extends AbstractComponent {
   constructor(filters) {
     super();
@@ -20,9 +30,17 @@ export default class Filter extends AbstractComponent {
 
   setFilterChangeHandler(handler) {
     this.getElement().addEventListener(`click`, (evt) => {
+      if (evt.target.tagName !== `A`) {
+        return
+      };
+
       const filterName = getFilterNameById(evt.target.id);
       handler(filterName);
     });
   }
-}
-;
+
+  setActive(oldFilter, newFilter) {
+    this.getElement().querySelector(`#filter__${oldFilter}`).classList.remove(`main-navigation__item--active`);
+    this.getElement().querySelector(`#filter__${newFilter}`).classList.add(`main-navigation__item--active`);
+  }
+};

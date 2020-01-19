@@ -10,16 +10,19 @@ export default class FilterController {
 
     this._activeFilterType = Filters.ALL;
     this._filterComponent = null;
+    this._handler = null;
 
     this._onDataChange = this._onDataChange.bind(this);
     this._onFilterChange = this._onFilterChange.bind(this);
 
     this._moviesModel.setDataChangeHandler(this._onDataChange);
+
   }
 
   render() {
     const container = this._container;
     const allCards = this._moviesModel.getAllCards();
+
     const filters = Object.values(Filters).map((filter) => {
       return {
         name: filter,
@@ -38,15 +41,26 @@ export default class FilterController {
     } else {
       render(container, this._filterComponent, RenderPosition.BEFOREEND);
     }
-
   }
 
   _onFilterChange(filterType) {
+    const oldFilter = this._activeFilterType;
+
     this._moviesModel.setFilter(filterType);
     this._activeFilterType = filterType;
+
+    this._filterComponent.setActive(oldFilter, this._activeFilterType);
+
+    this._handler(filterType);
   }
 
   _onDataChange() {
     this.render();
   }
+
+  showScreen(handler) {
+    this._handler = handler;
+    // this._filterComponent.setFilterChangeHandler(handler);
+  }
+
 }

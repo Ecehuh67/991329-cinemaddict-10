@@ -85,6 +85,16 @@ export default class PageController {
     this._loadMoreComponent.setButtonClickHandler(this._onLoadMoreButtonClick);
   }
 
+  hide() {
+    this._sortComponent.hide();
+    this._container.hide();
+  }
+
+  show() {
+    this._sortComponent.show();
+    this._container.show();
+  }
+
   render() {
     const cards = this._moviesModel.getCards();
 
