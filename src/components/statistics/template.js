@@ -101,7 +101,7 @@ const getTopGenre = (cards) => {
   return topGenre;
 };
 
-const convertTime = (duration) => {
+export const convertTime = (duration) => {
   const hours = Math.floor(duration / 60);
   const minutes = Math.round((duration / 60 - hours) * 60);
 

@@ -67,6 +67,10 @@ export const formateDate = (date) => {
   return moment(date).format(`DD MMMM YYYY`);
 };
 
+export const formateDateToYear = (date) => {
+  return moment(date).format(`YYYY`);
+};
+
 export const formatTime = (date) => {
   return moment(date).format(`h[h] m[m]`);
 };
