@@ -56,6 +56,10 @@ export default class Movie {
     });
   }
 
+  _getComments(cards, handler) {
+    cards.map((card) => ({'id': card.id, 'comments': handler({url: `comments/${card.id}`})}));
+  }
+
   static parseCard(data) {
     return new Movie(data);
   }

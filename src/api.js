@@ -21,13 +21,29 @@ const API = class {
     this._endPoint = endPoint;
     this._authorization = authorization;
 
+    this._movies = null;
+
   }
 
   getCards() {
     return this._load({url: `movies`})
       .then((response) => response.json())
-      // .then((films) => films.map((film) => ({'id': film.id, 'comments': film.comments})))
-      .then((val) => {console.log(val); return this._load({url: `comments/:18`})})
+      .then((cards) => {
+        this._movies = cards;
+
+        this._movies.forEach((movie) => movie['comments'] = this._load({url: `comments/${movie.id}`}))
+        return this._movies;
+      })
+      .then((data) => {
+        console.log(data)
+      })
+      // .then((cards) => {
+      //   films = cards;
+      //   const tr = cards.map((card) => ({'id': card.id, 'comments': this._load({url: `comments/${card.id}`})}))
+      //   return tr
+      //   // return cards.map((card) => ({'id': card.id, comments: this._load({url: `comments/${card.id}`})}))
+      // })
+      // .then((comments) => console.log(films))
       // .then(MovieModel.parseCards)
   }
 
