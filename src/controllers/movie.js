@@ -1,5 +1,6 @@
 import PopupComponent from '../components/film-detail/index';
 import CardComponent from '../components/card/index';
+import MovieModel from '../models/movie';
 import {render, RenderPosition, remove, replace} from '../utils/render';
 
 const FilmMode = {
@@ -85,25 +86,34 @@ export default class MovieController {
     }
   }
 
+  // _addToWatchlistHandler() {
+  //   this._onDataChange(
+  //       this,
+  //       this._card,
+  //       Object.assign({}, this._card, {isAddedToWatch: !this._card.isAddedToWatch}));
+  // }
+
   _addToWatchlistHandler() {
+    // const newCard = MovieModel.clone(this._card);
+    // console.log(newCard)
     this._onDataChange(
         this,
         this._card,
-        Object.assign({}, this._card, {isAddedToWatch: !this._card.isAddedToWatch}));
+        Object.assign({}, this._card, {watchlist: !this._card.watchlist}));
   }
 
   _addToWatchedHandler() {
     this._onDataChange(
         this,
         this._card,
-        Object.assign({}, this._card, {isWatched: !this._card.isWatched}));
+        Object.assign({}, this._card, {watched: !this._card.watched}));
   }
 
   _addToFavoritesHandler() {
     this._onDataChange(
         this,
         this._card,
-        Object.assign({}, this._card, {isFavorite: !this._card.isFavorite}));
+        Object.assign({}, this._card, {favorite: !this._card.favorite}));
   }
 
   _deleteCommentButtonHandler() {

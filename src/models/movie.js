@@ -1,34 +1,33 @@
 export default class Movie {
   constructor(data) {
-    // console.log(data);
+
     this.id = data[`id`];
+    this.filmInfo = data[`film_info`];
+    this.userDetails = data[`user_details`];
     this.comments = data[`comments`];
-    this.commentsCount = this.comments.length;
-    // this.filmInfo = data[`film_info`];
-    this.title = data[`film_info`][`title`];
-    this.alternativeTitle = data[`film_info`][`alternative_title`];
-    this.totalRating = data[`film_info`][`total_rating`];
-    this.poster = data[`film_info`][`poster`];
-    this.ageRating = data[`film_info`][`age_rating`];
-    this.director = data[`film_info`][`director`];
-    this.writers = data[`film_info`][`writers`];
-    this.actors = data[`film_info`][`actors`];
-    // this.release = data[`film_info`][`release`];
-    this.dataRelease = data[`film_info`][`release`][`date`];
-    this.countryRelease = data[`film_info`][`release`][`release_country`];
-    this.runtime = data[`film_info`][`runtime`];
-    this.genre = data[`film_info`][`genre`];
-    this.description = data[`film_info`][`description`];
-    // this.userDetails = data[`user_details`];
-    this.personalRating = data[`user_details`][`personal_rating`];
-    this.watchlist = Boolean(data[`user_details`][`watchlist`]);
-    this.watched = Boolean(data[`user_details`][`already_watched`]);
-    this.watchingDate = data[`user_details`][`watching_date`];
-    this.favorite = Boolean(data[`user_details`][`favorite`]);
+    // this.comments = data[`comments`];
+    // this.commentsCount = this.comments ? this.comments.length : ``;
+    // this.title = data[`film_info`][`title`];
+    // this.alternativeTitle = data[`film_info`][`alternative_title`];
+    // this.totalRating = data[`film_info`][`total_rating`];
+    // this.poster = data[`film_info`][`poster`];
+    // this.ageRating = data[`film_info`][`age_rating`];
+    // this.director = data[`film_info`][`director`];
+    // this.writers = data[`film_info`][`writers`];
+    // this.actors = data[`film_info`][`actors`];
+    // this.dataRelease = data[`film_info`][`release`][`date`];
+    // this.countryRelease = data[`film_info`][`release`][`release_country`];
+    // this.runtime = data[`film_info`][`runtime`];
+    // this.genre = data[`film_info`][`genre`];
+    // this.description = data[`film_info`][`description`];
+    // this.personalRating = data[`user_details`][`personal_rating`];
+    // this.watchlist = Boolean(data[`user_details`][`watchlist`]);
+    // this.watched = Boolean(data[`user_details`][`already_watched`]);
+    // this.watchingDate = data[`user_details`][`watching_date`];
+    // this.favorite = Boolean(data[`user_details`][`favorite`]);
   }
 
   toRAW() {
-    console.log(this.comments)
     return ({
       'id': this.id,
       'comments': this.comments,
@@ -67,6 +66,7 @@ export default class Movie {
   }
 
   static clone(data) {
+    console.log(data.title)
     return new Movie(data.toRAW);
   }
 }

@@ -4,9 +4,15 @@ import {generateUserRatingMarkup} from './user-rating';
 import {getFormatedRuntime} from '../card/template';
 
 export const createDetailInfoTemplate = (card, options) => {
-  // const {title, rate, genre, poster, description, comments, isAddedToWatch, isWatched, isFavorite, userRating} = card;
+  // const {title, poster, comments, alternativeTitle, totalRating, personalRating, director, writers, actors, dataRelease, runtime, genre, countryRelease, description, ageRating, watchlist, watched, favorite} = card;
 
-  const {title, poster, comments, alternativeTitle, totalRating, personalRating, director, writers, actors, dataRelease, runtime, countryRelease, genre, description, ageRating, watchlist, watched, favorite} = card;
+
+  const {title, alternative_title, total_rating, poster, age_rating, director, writers, actors, runtime, genre, description} = card.filmInfo
+
+  console.log(title, alternative_title, total_rating, poster, age_rating, director, writers, actors, runtime, genre, description)
+  const {date, release_country} = card.filmInfo.release;
+  const {personalRating, watchlist, watched, favorite} = card.userDetails;
+  const {comments} = card
 
   const createGenresmarkup = (genres) => {
     return (
@@ -24,7 +30,8 @@ export const createDetailInfoTemplate = (card, options) => {
     );
   };
 
-  const date = formateDate(dataRelease);
+  const dataRelease = formateDate(date);
+  // const date = formateDate(dataRelease);
   const duration = getFormatedRuntime(runtime);
   const isGenres = genre.length > 1;
   const {commentEmojiImage} = options;
@@ -54,11 +61,11 @@ export const createDetailInfoTemplate = (card, options) => {
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
                   <h3 class="film-details__title">${title}</h3>
-                  <p class="film-details__title-original">Original: ${alternativeTitle}</p>
+                  <p class="film-details__title-original">Original: ${alternative_title}</p>
                 </div>
 
                 <div class="film-details__rating">
-                  <p class="film-details__total-rating">${totalRating}</p>
+                  <p class="film-details__total-rating">${total_rating}</p>
                 </div>
               </div>
 
@@ -77,7 +84,7 @@ export const createDetailInfoTemplate = (card, options) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${date}</td>
+                  <td class="film-details__cell">${dataRelease}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
@@ -85,7 +92,7 @@ export const createDetailInfoTemplate = (card, options) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
-                  <td class="film-details__cell">${countryRelease}</td>
+                  <td class="film-details__cell">${release_country}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">${isGenres ? `Genres` : `Genre`}</td>

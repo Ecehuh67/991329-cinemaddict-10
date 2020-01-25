@@ -49,9 +49,10 @@ const renderTopListFilms = (container, cards, onDataChange, onViewChange) => {
 };
 
 export default class PageController {
-  constructor(container, moviesModel) {
+  constructor(container, moviesModel, api) {
     this._container = container;
     this._moviesModel = moviesModel;
+    this._api = api;
 
     this._showedCardControllers = [];
     this._showingCardCount = SHOWING_CARD;
@@ -184,11 +185,22 @@ export default class PageController {
       movieController.render(newData);
 
     } else {
-      const isSuccess = this._moviesModel.updateCard(oldData.id, newData);
+      // const isSuccess = this._moviesModel.updateCard(oldData.id, newData);
+      //
+      // if (isSuccess) {
+      //   movieController.render(newData);
+      // }
+      this._api.updateCard(oldData.id, newData)
+        .then((MovieModel) => {
+          const isSuccess = this._moviesModel.updateCard(oldData.id, newData);
 
-      if (isSuccess) {
-        movieController.render(newData);
-      }
+          if (isSuccess) {
+            movieController.render(MovieModel);
+            this._updateCards(this._showingCardCount);
+          }
+
+        })
+
     }
   }
 

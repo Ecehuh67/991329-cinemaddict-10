@@ -25,7 +25,7 @@ const randomRate = getRandomNumber(25);
 render(headerElement, new RankComponent(randomRate), RenderPosition.BEFOREEND);
 
 const containerComponent = new ContainerComponent();
-const pageController = new PageController(containerComponent, moviesModel);
+const pageController = new PageController(containerComponent, moviesModel, api);
 
 const filterController = new FilterController(mainElement, moviesModel);
 // filterController.render();
