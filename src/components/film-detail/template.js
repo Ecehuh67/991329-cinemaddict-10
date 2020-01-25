@@ -6,10 +6,8 @@ import {getFormatedRuntime} from '../card/template';
 export const createDetailInfoTemplate = (card, options) => {
   // const {title, poster, comments, alternativeTitle, totalRating, personalRating, director, writers, actors, dataRelease, runtime, genre, countryRelease, description, ageRating, watchlist, watched, favorite} = card;
 
+  const {title, alternative_title, poster, total_rating, age_rating, director, writers, actors, runtime, genre, description} = card.filmInfo;
 
-  const {title, alternative_title, total_rating, poster, age_rating, director, writers, actors, runtime, genre, description} = card.filmInfo
-
-  console.log(title, alternative_title, total_rating, poster, age_rating, director, writers, actors, runtime, genre, description)
   const {date, release_country} = card.filmInfo.release;
   const {personalRating, watchlist, watched, favorite} = card.userDetails;
   const {comments} = card

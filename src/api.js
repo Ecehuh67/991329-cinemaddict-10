@@ -30,7 +30,6 @@ const API = class {
       .then((response) => response.json())
       .then((cards) => {
         this._movies = cards;
-
         return Promise
           .all(cards.map((card) => this._load({url: `comments/${card.id}`})))
       })
@@ -46,11 +45,10 @@ const API = class {
   }
 
   updateCard(id, data) {
-    console.log(id,data)
     return this._load({
       utl: `movies/${id}`,
       method: Method.PUT,
-      body: JSON.stringify(data.toRAW()),
+      body: JSON.stringify(data),
       headers: new Headers({'Content-Type': `application/json`})
     })
       .then((response) => response.json())
@@ -69,12 +67,12 @@ const API = class {
         return newMovies;
       })
       .then(MovieModel.parseCards)
-
   }
 
   _load({url, method = Method.GET, body = null, headers = new Headers()}) {
     headers.append(`Authorization`, this._authorization);
 
+    console.log(`${this._endPoint}/${url}`)
     return fetch(`${this._endPoint}/${url}`, {method, body, headers})
       .then(checkStatus)
       .catch((err) => {

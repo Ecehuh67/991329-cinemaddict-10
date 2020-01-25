@@ -1,6 +1,5 @@
 export default class Movie {
   constructor(data) {
-
     this.id = data[`id`];
     this.filmInfo = data[`film_info`];
     this.userDetails = data[`user_details`];
@@ -30,31 +29,40 @@ export default class Movie {
   toRAW() {
     return ({
       'id': this.id,
-      'comments': this.comments,
-      'film_info': {
-        'title': this.title,
-        'alternative_title': this.alternativeTitle,
-        'totalRating': this.totalRating,
-        'poster': this.poster,
-        'age_rating': this.ageRating,
-        'director': this.director,
-        'writers': this.writers,
-        'actors': this.actors,
-        'release': this.release,
-        'date': this.dataRelease,
-        'release_country': this.release_country,
-        'runtime': this.runtime,
-        'genre': this.genre,
-        'description': this.description
-      },
-      'user_details': {
-        'personal_rating': this.personalRating,
-        'watchlist': this.watchlist,
-        'already_watched': this.watched,
-        'watching_date': this.watchingDate,
-        'favorite': this.favorite
-      }
+      'comments': this._convertComments(this.comments),
+      'film_info': this.filmInfo,
+      'user_details': this.userDetails
+
+      // 'id': this.id,
+      // 'comments': this.comments,
+      // 'film_info': {
+      //   'title': this.title,
+      //   'alternative_title': this.alternativeTitle,
+      //   'totalRating': this.totalRating,
+      //   'poster': this.poster,
+      //   'age_rating': this.ageRating,
+      //   'director': this.director,
+      //   'writers': this.writers,
+      //   'actors': this.actors,
+      //   'release': this.release,
+      //   'date': this.dataRelease,
+      //   'release_country': this.release_country,
+      //   'runtime': this.runtime,
+      //   'genre': this.genre,
+      //   'description': this.description
+      // },
+      // 'user_details': {
+      //   'personal_rating': this.personalRating,
+      //   'watchlist': this.watchlist,
+      //   'already_watched': this.watched,
+      //   'watching_date': this.watchingDate,
+      //   'favorite': this.favorite
+      // }
     });
+  }
+
+  _convertComments(data) {
+    return data.map((it) => it.id)
   }
 
   static parseCard(data) {
@@ -66,7 +74,6 @@ export default class Movie {
   }
 
   static clone(data) {
-    console.log(data.title)
-    return new Movie(data.toRAW);
+    return new Movie(data.toRAW());
   }
 }

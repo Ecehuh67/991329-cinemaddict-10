@@ -94,26 +94,35 @@ export default class MovieController {
   // }
 
   _addToWatchlistHandler() {
-    // const newCard = MovieModel.clone(this._card);
-    // console.log(newCard)
-    this._onDataChange(
-        this,
-        this._card,
-        Object.assign({}, this._card, {watchlist: !this._card.watchlist}));
+    const newCard = MovieModel.clone(this._card);
+    newCard.userDetails.watchlist = !newCard.userDetails.watchlist;
+    this._onDataChange(this, this._card, newCard)
+
+    // this._onDataChange(
+    //     this,
+    //     this._card,
+    //     Object.assign({}, this._card, {watchlist: !this._card.watchlist}));
   }
 
   _addToWatchedHandler() {
-    this._onDataChange(
-        this,
-        this._card,
-        Object.assign({}, this._card, {watched: !this._card.watched}));
+    const newCard = MovieModel.clone(this._card);
+    newCard.userDetails.already_watched = !newCard.userDetails.already_watched;
+    this._onDataChange(this, this._card, newCard)
+    // this._onDataChange(
+    //     this,
+    //     this._card,
+    //     Object.assign({}, this._card, {watched: !this._card.watched}));
   }
 
   _addToFavoritesHandler() {
-    this._onDataChange(
-        this,
-        this._card,
-        Object.assign({}, this._card, {favorite: !this._card.favorite}));
+    const newCard = MovieModel.clone(this._card);
+    newCard.userDetails.favorite = !newCard.userDetails.favorite;
+    this._onDataChange(this, this._card, newCard)
+
+    // this._onDataChange(
+    //     this,
+    //     this._card,
+    //     Object.assign({}, this._card, {favorite: !this._card.favorite}));
   }
 
   _deleteCommentButtonHandler() {
