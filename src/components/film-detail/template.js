@@ -7,7 +7,7 @@ export const createDetailInfoTemplate = (card, options) => {
   const {title, alternative_title, poster, total_rating, age_rating, director, writers, actors, runtime, genre, description} = card.filmInfo;
 
   const {date, release_country} = card.filmInfo.release;
-  const {personalRating, watchlist, watched, favorite} = card.userDetails;
+  const {personalRating, watchlist, already_watched, favorite} = card.userDetails;
   const {comments} = card
 
   const createGenresmarkup = (genres) => {
@@ -106,7 +106,7 @@ export const createDetailInfoTemplate = (card, options) => {
             <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${watchlist ? `checked` : ``}>
             <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${watched ? `checked` : ``}>
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${already_watched ? `checked` : ``}>
             <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
             <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${favorite ? `checked` : ``}>
@@ -115,7 +115,7 @@ export const createDetailInfoTemplate = (card, options) => {
         </div>
 
         <div class="form-details__middle-container">
-          ${watched ?
+          ${already_watched ?
           `<section class="film-details__user-rating-wrap">
             <div class="film-details__user-rating-controls">
               <button class="film-details__watched-reset" type="button">Undo</button>
