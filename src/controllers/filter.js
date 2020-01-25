@@ -24,6 +24,7 @@ export default class FilterController {
     const allCards = this._moviesModel.getAllCards();
 
     const filters = Object.values(Filters).map((filter) => {
+
       return {
         name: filter,
         count: getCardsByFilter(allCards, filter).length,

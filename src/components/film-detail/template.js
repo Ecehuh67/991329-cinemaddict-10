@@ -29,8 +29,6 @@ export const createDetailInfoTemplate = (card, options) => {
   const isGenres = genre.length > 1;
   const {commentEmojiImage} = options;
 
-
-
   const genres = createGenreTemplate(genre);
 
   const newDescription = description.length > 139 ? description.substring(0, 139).concat(`...`) : ``;
@@ -141,16 +139,7 @@ export const createDetailInfoTemplate = (card, options) => {
             <h3 class="film-details__comments-title">${comments.length === 1 ? `Comment` : `Comments`} <span class="film-details__comments-count">${comments.length}</span></h3>
 
             <ul class="film-details__comments-list">
-
-
-
-
-
-
-
-
-
-
+              ${createCommentsMarkup(comments)}
             </ul>
 
             <div class="film-details__new-comment">

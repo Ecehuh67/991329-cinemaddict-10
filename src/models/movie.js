@@ -3,6 +3,7 @@ export default class Movie {
     // console.log(data);
     this.id = data[`id`];
     this.comments = data[`comments`];
+    this.commentsCount = this.comments.length;
     // this.filmInfo = data[`film_info`];
     this.title = data[`film_info`][`title`];
     this.alternativeTitle = data[`film_info`][`alternative_title`];
@@ -27,6 +28,7 @@ export default class Movie {
   }
 
   toRAW() {
+    console.log(this.comments)
     return ({
       'id': this.id,
       'comments': this.comments,
@@ -54,10 +56,6 @@ export default class Movie {
         'favorite': this.favorite
       }
     });
-  }
-
-  _getComments(cards, handler) {
-    cards.map((card) => ({'id': card.id, 'comments': handler({url: `comments/${card.id}`})}));
   }
 
   static parseCard(data) {

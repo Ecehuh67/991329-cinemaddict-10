@@ -7,15 +7,12 @@ import FilterComponent from './components/filters/index';
 import MoviesModel from './models/movies';
 import StatisticsComponent from './components/statistics/index';
 import API from './api.js';
-// import {generateCards} from './mocks/card';
-// import {generateFilters} from './mocks/filter';
 import {getRandomNumber, getRank} from './utils/common';
 import {render, RenderPosition, replaceSort} from './utils/render';
 
 const AUTHORIZATION = `Basic eo0w590ik29889a`;
 const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
 
-// const FILM_COUNT = 15;
 
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
@@ -27,21 +24,15 @@ const moviesModel = new MoviesModel();
 const randomRate = getRandomNumber(25);
 render(headerElement, new RankComponent(randomRate), RenderPosition.BEFOREEND);
 
-// const cards = generateCards(FILM_COUNT);
-// moviesModel.setCards(cards);
-
-const filterController = new FilterController(mainElement, moviesModel);
-filterController.render();
-
 const containerComponent = new ContainerComponent();
-render(mainElement, containerComponent, RenderPosition.BEFOREEND);
-
 const pageController = new PageController(containerComponent, moviesModel);
 
-// pageController.render();
-// replaceSort(mainElement);
+const filterController = new FilterController(mainElement, moviesModel);
+// filterController.render();
+// render(mainElement, containerComponent, RenderPosition.BEFOREEND);
 
 const statisticsComponent = new StatisticsComponent(moviesModel, getRank(randomRate));
+
 render(mainElement, statisticsComponent, RenderPosition.BEFOREEND);
 statisticsComponent.hide();
 
@@ -65,11 +56,12 @@ filterController.showScreen((menuItem) => {
 api.getCards()
   .then((cards => {
     moviesModel.setCards(cards);
-    console.log(cards)
+    filterController.render();
+
     pageController.render();
-}));
+    render(mainElement, containerComponent, RenderPosition.BEFOREEND);
+    replaceSort(mainElement);
 
-// replaceSort(mainElement);
-
-const totalFilms = document.querySelector(`.footer__statistics p`);
-totalFilms.textContent = `${moviesModel.getAllCards().length} movies inside`;
+    const totalFilms = document.querySelector(`.footer__statistics p`);
+    totalFilms.textContent = `${moviesModel.getAllCards().length} movies inside`;
+  }));

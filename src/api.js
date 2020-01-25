@@ -31,20 +31,18 @@ const API = class {
       .then((cards) => {
         this._movies = cards;
 
-        this._movies.forEach((movie) => movie['comments'] = this._load({url: `comments/${movie.id}`}))
-        return this._movies;
+        return Promise
+          .all(cards.map((card) => this._load({url: `comments/${card.id}`})))
       })
-      .then((data) => {
-        console.log(data)
+      .then((response) => {
+        return Promise.all(response.map((it) => it.json()))
       })
-      // .then((cards) => {
-      //   films = cards;
-      //   const tr = cards.map((card) => ({'id': card.id, 'comments': this._load({url: `comments/${card.id}`})}))
-      //   return tr
-      //   // return cards.map((card) => ({'id': card.id, comments: this._load({url: `comments/${card.id}`})}))
-      // })
-      // .then((comments) => console.log(films))
-      // .then(MovieModel.parseCards)
+      .then((comments) => {
+        this._movies.forEach((movie, index) => movie[`comments`] = comments[index]);
+        const newMovies = this._movies;
+        return newMovies;
+      })
+      .then(MovieModel.parseCards)
   }
 
   updateCard(id, data) {

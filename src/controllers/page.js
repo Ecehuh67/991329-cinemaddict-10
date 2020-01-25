@@ -37,11 +37,11 @@ const renderTopListFilms = (container, cards, onDataChange, onViewChange) => {
 
     switch (it.previousElementSibling.firstChild.data) {
       case `Top rated`:
-        const ratedCards = getConditionFilms(cards, FILM_POPULAR, `rate`);
+        const ratedCards = getConditionFilms(cards, FILM_POPULAR, `totalRating`);
         renderCards(it, ratedCards, onDataChange, onViewChange);
         break;
       case `Most commented`:
-        const commentedCards = getConditionFilms(cards, FILM_POPULAR, `commentCount`);
+        const commentedCards = getConditionFilms(cards, FILM_POPULAR, `commentsCount`);
         renderCards(it, commentedCards, onDataChange, onViewChange);
         break;
     }

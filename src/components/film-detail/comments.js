@@ -1,4 +1,5 @@
 import {getRandomNumber} from '../../utils/common';
+import {formateDate} from '../../utils/common';
 
 export const createCommentsMarkup = (comments, emoji) => {
 
@@ -9,18 +10,18 @@ export const createCommentsMarkup = (comments, emoji) => {
   }
 
   return (comments
-    .map(({text, author, date, emojiImage}) => {
+    .map(({author, emotion, comment, date}) => {
 
       return (
         `<li class="film-details__comment">
           <span class="film-details__comment-emoji">
-            <img src="./images/emoji/${emojiImage ? emojiImage : `smile.png`}" width="55" height="55" alt="emoji">
+            <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="emoji">
           </span>
           <div>
-            <p class="film-details__comment-text">${text}</p>
+            <p class="film-details__comment-text">${comment}</p>
             <p class="film-details__comment-info">
               <span class="film-details__comment-author">${author}</span>
-              <span class="film-details__comment-day">${date}</span>
+              <span class="film-details__comment-day">${formateDate(date)}</span>
               <button class="film-details__comment-delete">Delete</button>
             </p>
           </div>
