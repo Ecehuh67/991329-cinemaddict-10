@@ -29,9 +29,9 @@ export default class Movie {
   toRAW() {
     return ({
       'id': this.id,
-      'comments': this._convertComments(this.comments),
       'film_info': this.filmInfo,
-      'user_details': this.userDetails
+      'user_details': this.userDetails,
+      'comments': this.comments
 
       // 'id': this.id,
       // 'comments': this.comments,
@@ -61,8 +61,17 @@ export default class Movie {
     });
   }
 
+  converToServer() {
+    return ({
+      'id': this.id,
+      'film_info': this.filmInfo,
+      'user_details': this.userDetails,
+      'comments': this._convertComments(this.comments)
+    });
+  }
+
   _convertComments(data) {
-    return data.map((it) => it.id)
+    return data.map((it) => it.id);
   }
 
   static parseCard(data) {

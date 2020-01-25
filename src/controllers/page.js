@@ -199,7 +199,7 @@ export default class PageController {
             this._updateCards(this._showingCardCount);
           }
 
-        })
+        });
 
     }
   }

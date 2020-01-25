@@ -96,7 +96,7 @@ export default class MovieController {
   _addToWatchlistHandler() {
     const newCard = MovieModel.clone(this._card);
     newCard.userDetails.watchlist = !newCard.userDetails.watchlist;
-    this._onDataChange(this, this._card, newCard)
+    this._onDataChange(this, this._card, newCard);
 
     // this._onDataChange(
     //     this,
@@ -107,7 +107,7 @@ export default class MovieController {
   _addToWatchedHandler() {
     const newCard = MovieModel.clone(this._card);
     newCard.userDetails.already_watched = !newCard.userDetails.already_watched;
-    this._onDataChange(this, this._card, newCard)
+    this._onDataChange(this, this._card, newCard);
     // this._onDataChange(
     //     this,
     //     this._card,
@@ -117,7 +117,7 @@ export default class MovieController {
   _addToFavoritesHandler() {
     const newCard = MovieModel.clone(this._card);
     newCard.userDetails.favorite = !newCard.userDetails.favorite;
-    this._onDataChange(this, this._card, newCard)
+    this._onDataChange(this, this._card, newCard);
 
     // this._onDataChange(
     //     this,

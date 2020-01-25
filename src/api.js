@@ -22,6 +22,7 @@ const API = class {
     this._authorization = authorization;
 
     this._movies = null;
+    this._movie = null;
 
   }
 
@@ -45,34 +46,31 @@ const API = class {
   }
 
   updateCard(id, data) {
+    console.log(data.converToServer())
     return this._load({
-      utl: `movies/${id}`,
+      url: `movies/${id}`,
       method: Method.PUT,
-      body: JSON.stringify(data),
+      body: JSON.stringify(data.converToServer()),
       headers: new Headers({'Content-Type': `application/json`})
     })
       .then((response) => response.json())
-      .then((cards) => {
-        this._movies = cards;
+      .then((card) => {
+        this._movie = card;
 
-        return Promise
-          .all(cards.map((card) => this._load({url: `comments/${card.id}`})))
+        return this._load({url: `comments/${card.id}`})
       })
-      .then((response) => {
-        return Promise.all(response.map((it) => it.json()))
-      })
+      .then((response) => response.json())
       .then((comments) => {
-        this._movies.forEach((movie, index) => movie[`comments`] = comments[index]);
-        const newMovies = this._movies;
-        return newMovies;
+        this._movie[`comments`] = comments;
+        const newMovie = this._movie;
+        return newMovie;
       })
-      .then(MovieModel.parseCards)
+      .then(MovieModel.parseCard)
   }
 
   _load({url, method = Method.GET, body = null, headers = new Headers()}) {
     headers.append(`Authorization`, this._authorization);
 
-    console.log(`${this._endPoint}/${url}`)
     return fetch(`${this._endPoint}/${url}`, {method, body, headers})
       .then(checkStatus)
       .catch((err) => {

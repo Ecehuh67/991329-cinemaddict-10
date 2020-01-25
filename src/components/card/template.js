@@ -8,9 +8,6 @@ export const getFormatedRuntime = (minutes)=>  {
 };
 
 export const createFilmCardTempalate = (card) => {
-
-  // const {id, comments, title, totalRating, genre, runtime, dataRelease, poster, description, watchlist, watched, favorite} = card;
-
   const {id, comments} = card;
   const {title, total_rating, genre, runtime, poster, description} = card.filmInfo
   const {watchlist, already_watched, favorite} = card.userDetails;

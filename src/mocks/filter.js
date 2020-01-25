@@ -4,7 +4,7 @@ const getAllCards = (cards) => cards;
 
 const getWatchlistCards = (cards) => cards.filter((card) => card.userDetails.watchlist);
 
-const getHistoryCards = (cards) => cards.filter((card) => card.userDetails.watched);
+const getHistoryCards = (cards) => cards.filter((card) => card.userDetails.already_watched);
 
 const getFavoritesCards = (cards) => cards.filter((card) => card.userDetails.favorite);
 
