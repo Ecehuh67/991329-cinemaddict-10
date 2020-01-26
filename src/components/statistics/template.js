@@ -3,15 +3,11 @@ import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export const renderChart = (ctx, cards) => {
-  const watchedFilms = cards.slice().filter((card) => card.isWatched);
-
+  const watchedFilms = cards.slice().filter((card) => card.userDetails.already_watched);
   const genreList = getGenresListFromCards(watchedFilms);
   let genresCategories = uniqueGenres(genreList);
-
   const counterGenres = countSimmilarGenres(genresCategories, genreList);
-
   let values = genresCategories.map((genre) => counterGenres[genre]);
-
   if (watchedFilms.length === 0) {
     genresCategories = [];
     values = [];
@@ -45,7 +41,7 @@ export const renderChart = (ctx, cards) => {
     options: {
       layout: {
         padding: {
-          bottom: 230,
+          bottom: 0, //control
         }
       },
       legend: {
@@ -70,7 +66,7 @@ export const renderChart = (ctx, cards) => {
   });
 }
 
-const getGenresListFromCards = (cards) => cards.slice().map((card) => card.genre).join().split(`,`);
+const getGenresListFromCards = (cards) => cards.slice().map((card) => card.filmInfo.genre).join().split(`,`);
 
 const uniqueGenres = (listOfGenres) => listOfGenres.slice().filter((genre, i) => listOfGenres.indexOf(genre) === i);
 
@@ -115,29 +111,30 @@ export const convertTime = (duration) => {
 
 export const createStatisticTemplate = (cards, rank) => {
   const listOfFilms = cards;
-  const totalWatched = listOfFilms.slice().filter((card) => card.isWatched);
-
+  const totalWatched = listOfFilms.slice().filter((card) => card.userDetails.already_watched);
   let hours = `0`;
   let minutes = `0`;
   let totalDuration = `0`;
 
   if (totalWatched.length > 0) {
-    totalDuration = totalWatched
-      .map((card) => card.duration
-        .split(' ')
-        .map((it) => parseInt(it, 10))
-          .map((number, i) => {
-            let duration = 0;
-            if (i === 0) {
-              duration += number * 60;
-            } else if (i === 1) {
-              duration += number;
-            }
 
-            return duration;
-          })
-          .reduce((acc, num) => acc + num))
-      .reduce((acc, film) => acc + film);
+      totalDuration = totalWatched.map((it) => it.filmInfo.runtime).reduce((acc, num) => acc + num);
+    // totalDuration = totalWatched
+    //   .map((card) => card.duration
+    //     .split(' ')
+    //     .map((it) => parseInt(it, 10))
+    //       .map((number, i) => {
+    //         let duration = 0;
+    //         if (i === 0) {
+    //           duration += number * 60;
+    //         } else if (i === 1) {
+    //           duration += number;
+    //         }
+    //
+    //         return duration;
+    //       })
+    //       .reduce((acc, num) => acc + num))
+    //   .reduce((acc, film) => acc + film);
 
       hours = convertTime(totalDuration).hours;
       minutes = convertTime(totalDuration).minutes;

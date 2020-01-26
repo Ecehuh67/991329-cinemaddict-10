@@ -20,8 +20,8 @@ const mainElement = document.querySelector(`.main`);
 const api = new API(END_POINT, AUTHORIZATION);
 const moviesModel = new MoviesModel();
 
-// Randomly generate a number for getting Rate of user
 const randomRate = getRandomNumber(25);
+const statisticsComponent = new StatisticsComponent({model: moviesModel, rank: getRank(randomRate)});
 render(headerElement, new RankComponent(randomRate), RenderPosition.BEFOREEND);
 
 const containerComponent = new ContainerComponent();
@@ -30,8 +30,6 @@ const pageController = new PageController(containerComponent, moviesModel, api);
 const filterController = new FilterController(mainElement, moviesModel);
 // filterController.render();
 // render(mainElement, containerComponent, RenderPosition.BEFOREEND);
-
-const statisticsComponent = new StatisticsComponent(moviesModel, getRank(randomRate));
 
 render(mainElement, statisticsComponent, RenderPosition.BEFOREEND);
 statisticsComponent.hide();
@@ -57,10 +55,11 @@ api.getCards()
   .then((cards => {
     moviesModel.setCards(cards);
     filterController.render();
-
     pageController.render();
+
     render(mainElement, containerComponent, RenderPosition.BEFOREEND);
     replaceSort(mainElement);
+
 
     const totalFilms = document.querySelector(`.footer__statistics p`);
     totalFilms.textContent = `${moviesModel.getAllCards().length} movies inside`;

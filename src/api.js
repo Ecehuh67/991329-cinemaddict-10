@@ -46,17 +46,15 @@ const API = class {
   }
 
   updateCard(id, data) {
-    console.log(data.converToServer())
     return this._load({
       url: `movies/${id}`,
       method: Method.PUT,
-      body: JSON.stringify(data.converToServer()),
+      body: JSON.stringify(data.convertToServer()),
       headers: new Headers({'Content-Type': `application/json`})
     })
       .then((response) => response.json())
       .then((card) => {
         this._movie = card;
-
         return this._load({url: `comments/${card.id}`})
       })
       .then((response) => response.json())
@@ -66,6 +64,26 @@ const API = class {
         return newMovie;
       })
       .then(MovieModel.parseCard)
+  }
+
+  createComment(card) {
+    return this._load({
+      url: `comments/${card.id}`,
+      method: Method.POST,
+      body: JSON.stringify(card.converCommentToServer()),
+      headers: new Headers({'Content-Type': `application/json`})
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        this._movie = result.movie;
+        this._movie[`comments`] = result.comments;
+        return this._movie
+      })
+      .then(MovieModel.parseCard)
+  }
+
+  deleteComment(id) {
+    return this._load({url: `comments/${id}`, method: Method.DELETE});
   }
 
   _load({url, method = Method.GET, body = null, headers = new Headers()}) {

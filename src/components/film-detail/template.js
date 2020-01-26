@@ -7,8 +7,8 @@ export const createDetailInfoTemplate = (card, options) => {
   const {title, alternative_title, poster, total_rating, age_rating, director, writers, actors, runtime, genre, description} = card.filmInfo;
 
   const {date, release_country} = card.filmInfo.release;
-  const {personalRating, watchlist, already_watched, favorite} = card.userDetails;
-  const {comments} = card
+  const {personal_rating, watchlist, already_watched, favorite} = card.userDetails;
+  const {comments} = card;
 
   const createGenresmarkup = (genres) => {
     return (
@@ -37,7 +37,7 @@ export const createDetailInfoTemplate = (card, options) => {
   const newDescription = description.length > 139 ? description.substring(0, 139).concat(`...`) : ``;
 
   // const commentsMarkup = createCommentsMarkup(comments);
-  const userRatingMarkup = generateUserRatingMarkup(personalRating);
+  const userRatingMarkup = generateUserRatingMarkup(personal_rating);
 
   return (
     `<section class="film-details">

@@ -13,6 +13,7 @@ const SHOWING_CARD = 5;
 const CARD_COUNT_BY_BUTTON = 5;
 const FILM_POPULAR = 2;
 const TOP_LIST_AMOUNT = 2;
+const NEW_RATING_VALUE = `new`;
 
 export const renderCards = (filmsListElement, cards, onDataChange, onViewChange) => {
   return cards.map((card) => {
@@ -41,7 +42,7 @@ const renderTopListFilms = (container, cards, onDataChange, onViewChange) => {
         renderCards(it, ratedCards, onDataChange, onViewChange);
         break;
       case `Most commented`:
-        const commentedCards = getConditionFilms(cards, FILM_POPULAR, `commentsCount`);
+        const commentedCards = getConditionFilms(cards, FILM_POPULAR, `comments`);
         renderCards(it, commentedCards, onDataChange, onViewChange);
         break;
     }
@@ -117,6 +118,7 @@ export default class PageController {
     this._renderLoadMoreButton();
 
     createFilmContainers(container, TOP_LIST_AMOUNT);
+
     renderTopListFilms(container, cards, this._onDataChange, this._onViewChange);
   }
 
@@ -168,28 +170,42 @@ export default class PageController {
   _onDataChange(movieController, oldData, newData) {
     if (newData === null) {
       const card = oldData;
-      const index = oldData.comments.findIndex((it) => it.text === movieController._deleteElement);
-
+      const index = oldData.comments.findIndex((it) => it.id === movieController._deleteElement);
       const newComments = card.comments.filter((_, i) => i !== index);
+      const oldId = card.comments[index].id;
 
       card.comments = newComments;
 
-      this._updateCards(this._showingCardCount);
-
-      movieController.render(card);
+      this._api.deleteComment(oldId)
+        .then(() => {
+          this._moviesModel.updateCard(oldData.id, card);
+          this._updateCards(this._showingCardCount);
+          movieController.render(card);
+        });
 
     } else if (oldData === null) {
+      this._api.createComment(newData)
+        .then((MovieModel) => {
+          this._moviesModel.updateCard(MovieModel.id, MovieModel);
+          this._updateCards(this._showingCardCount);
+          movieController.render(MovieModel);
+        });
 
-      this._updateCards(this._showingCardCount);
+    } else if (newData === NEW_RATING_VALUE) {
+      const newValue = movieController._ratingFilmValue;
+      oldData.userDetails[`personal_rating`] = parseInt(newValue, 10);
 
-      movieController.render(newData);
+      this._api.updateCard(oldData.id, oldData)
+      .then((MovieModel) => {
+        const isSuccess = this._moviesModel.updateCard(oldData.id, oldData);
+
+        if (isSuccess) {
+          movieController.render(MovieModel);
+          this._updateCards(this._showingCardCount);
+        }
+      });
 
     } else {
-      // const isSuccess = this._moviesModel.updateCard(oldData.id, newData);
-      //
-      // if (isSuccess) {
-      //   movieController.render(newData);
-      // }
       this._api.updateCard(oldData.id, newData)
         .then((MovieModel) => {
           const isSuccess = this._moviesModel.updateCard(oldData.id, newData);
@@ -198,7 +214,6 @@ export default class PageController {
             movieController.render(MovieModel);
             this._updateCards(this._showingCardCount);
           }
-
         });
 
     }

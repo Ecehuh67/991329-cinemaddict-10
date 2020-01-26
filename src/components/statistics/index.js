@@ -2,11 +2,10 @@ import AbstractSmartComponent from '../abstract-components/smart-component';
 import {createStatisticTemplate, renderChart} from './template';
 
 export default class Statistics extends AbstractSmartComponent {
-  constructor(model, rank) {
+  constructor(data) {
     super();
-
-    this._model = model;
-    this._rank = rank;
+    this._model = data.model;
+    this._rank = data.rank;
 
     this._chart = null;
 

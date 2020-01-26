@@ -61,12 +61,21 @@ export default class Movie {
     });
   }
 
-  converToServer() {
+  convertToServer() {
     return ({
       'id': this.id,
       'film_info': this.filmInfo,
       'user_details': this.userDetails,
       'comments': this._convertComments(this.comments)
+    });
+  }
+
+  converCommentToServer() {
+    const newComment = this.comments.slice(this.comments.length - 1);
+    return ({
+      'comment': newComment[0].comment,
+      'date': newComment[0].date,
+      'emotion': newComment[0].emotion
     });
   }
 
