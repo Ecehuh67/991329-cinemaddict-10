@@ -39,7 +39,7 @@ const API = class {
       })
       .then((comments) => {
         this._movies.forEach((movie, index) => {
-          return movie[`comments`] = comments[index];
+          movie[`comments`] = comments[index];
         });
         const newMovies = this._movies;
         return newMovies;
