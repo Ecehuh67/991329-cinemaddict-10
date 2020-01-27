@@ -61,7 +61,6 @@ export default class FilterController {
 
   showScreen(handler) {
     this._handler = handler;
-    // this._filterComponent.setFilterChangeHandler(handler);
   }
 
 }

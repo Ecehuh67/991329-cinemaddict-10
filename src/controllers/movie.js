@@ -154,6 +154,5 @@ export default class MovieController {
 
   destroy() {
     remove(this._cardComponent);
-    // document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 }
