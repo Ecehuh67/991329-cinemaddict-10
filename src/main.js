@@ -48,7 +48,7 @@ filterController.showScreen((menuItem) => {
 });
 
 api.getCards()
-  .then((cards => {
+  .then((cards) => {
     moviesModel.setCards(cards);
     filterController.render();
     pageController.render();
@@ -59,4 +59,4 @@ api.getCards()
 
     const totalFilms = document.querySelector(`.footer__statistics p`);
     totalFilms.textContent = `${moviesModel.getAllCards().length} movies inside`;
-  }));
+  });
