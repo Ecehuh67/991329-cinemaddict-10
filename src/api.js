@@ -32,17 +32,17 @@ const API = class {
       .then((cards) => {
         this._movies = cards;
         return Promise
-          .all(cards.map((card) => this._load({url: `comments/${card.id}`})))
+          .all(cards.map((card) => this._load({url: `comments/${card.id}`})));
       })
       .then((response) => {
-        return Promise.all(response.map((it) => it.json()))
+        return Promise.all(response.map((it) => it.json()));
       })
       .then((comments) => {
-        this._movies.forEach((movie, index) => movie[`comments`] = comments[index]);
+        this._movies.forEach((movie, index) => { return movie[`comments`] = comments[index]});
         const newMovies = this._movies;
         return newMovies;
       })
-      .then(MovieModel.parseCards)
+      .then(MovieModel.parseCards);
   }
 
   updateCard(id, data) {
@@ -55,7 +55,7 @@ const API = class {
       .then((response) => response.json())
       .then((card) => {
         this._movie = card;
-        return this._load({url: `comments/${card.id}`})
+        return this._load({url: `comments/${card.id}`});
       })
       .then((response) => response.json())
       .then((comments) => {
@@ -63,7 +63,7 @@ const API = class {
         const newMovie = this._movie;
         return newMovie;
       })
-      .then(MovieModel.parseCard)
+      .then(MovieModel.parseCard);
   }
 
   createComment(card) {
@@ -73,13 +73,13 @@ const API = class {
       body: JSON.stringify(card.converCommentToServer()),
       headers: new Headers({'Content-Type': `application/json`})
     })
-      .then((response) => response.json())
+      .then((response) => {return response.json()})
       .then((result) => {
         this._movie = result.movie;
         this._movie[`comments`] = result.comments;
-        return this._movie
+        return this._movie;
       })
-      .then(MovieModel.parseCard)
+      .then(MovieModel.parseCard);
   }
 
   deleteComment(id) {

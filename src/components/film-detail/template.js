@@ -1,13 +1,20 @@
-import {formateDate, formatTime, getRandomDate} from '../../utils/common';
+import {formateDate} from '../../utils/common';
 import {createCommentsMarkup} from './comments';
 import {generateUserRatingMarkup} from './user-rating';
 import {getFormatedRuntime} from '../card/template';
 
 export const createDetailInfoTemplate = (card, options) => {
-  const {title, alternative_title, poster, total_rating, age_rating, director, writers, actors, runtime, genre, description} = card.filmInfo;
+  const {title, poster, director, writers, actors, runtime, genre, description} = card.filmInfo;
+  const alternativeTitle = card.filmInfo[`alternative_title`];
+  const ageRating = card.filmInfo[`age_rating`];
+  const totalRating = card.filmInfo[`total_rating`];
 
-  const {date, release_country} = card.filmInfo.release;
-  const {personal_rating, watchlist, already_watched, favorite} = card.userDetails;
+
+  const {date} = card.filmInfo.release;
+  const releaseCountry = card.filmInfo[`release_country`];
+  const {watchlist, favorite} = card.userDetails;
+  const personalRating = card.userDetails[`personal_rating`];
+  const alreadyWatched = card.userDetails[`already_watched`];
   const {comments} = card;
 
   const createGenresmarkup = (genres) => {
@@ -37,7 +44,7 @@ export const createDetailInfoTemplate = (card, options) => {
   const newDescription = description.length > 139 ? description.substring(0, 139).concat(`...`) : ``;
 
   // const commentsMarkup = createCommentsMarkup(comments);
-  const userRatingMarkup = generateUserRatingMarkup(personal_rating);
+  const userRatingMarkup = generateUserRatingMarkup(personalRating);
 
   return (
     `<section class="film-details">
@@ -50,18 +57,18 @@ export const createDetailInfoTemplate = (card, options) => {
             <div class="film-details__poster">
               <img class="film-details__poster-img" src=${poster} alt="">
 
-              <p class="film-details__age">18+</p>
+              <p class="film-details__age">${ageRating}</p>
             </div>
 
             <div class="film-details__info">
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
                   <h3 class="film-details__title">${title}</h3>
-                  <p class="film-details__title-original">Original: ${alternative_title}</p>
+                  <p class="film-details__title-original">Original: ${alternativeTitle}</p>
                 </div>
 
                 <div class="film-details__rating">
-                  <p class="film-details__total-rating">${total_rating}</p>
+                  <p class="film-details__total-rating">${totalRating}</p>
                 </div>
               </div>
 
@@ -88,7 +95,7 @@ export const createDetailInfoTemplate = (card, options) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
-                  <td class="film-details__cell">${release_country}</td>
+                  <td class="film-details__cell">${releaseCountry}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">${isGenres ? `Genres` : `Genre`}</td>
@@ -106,16 +113,15 @@ export const createDetailInfoTemplate = (card, options) => {
             <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${watchlist ? `checked` : ``}>
             <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${already_watched ? `checked` : ``}>
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${alreadyWatched ? `checked` : ``}>
             <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
-
             <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${favorite ? `checked` : ``}>
             <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
           </section>
         </div>
 
         <div class="form-details__middle-container">
-          ${already_watched ?
+          ${alreadyWatched ?
           `<section class="film-details__user-rating-wrap">
             <div class="film-details__user-rating-controls">
               <button class="film-details__watched-reset" type="button">Undo</button>
