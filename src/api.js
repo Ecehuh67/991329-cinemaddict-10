@@ -38,7 +38,9 @@ const API = class {
         return Promise.all(response.map((it) => it.json()));
       })
       .then((comments) => {
-        this._movies.forEach((movie, index) => { return movie[`comments`] = comments[index]});
+        this._movies.forEach((movie, index) => {
+          return movie[`comments`] = comments[index];
+        });
         const newMovies = this._movies;
         return newMovies;
       })
@@ -73,7 +75,9 @@ const API = class {
       body: JSON.stringify(card.converCommentToServer()),
       headers: new Headers({'Content-Type': `application/json`})
     })
-      .then((response) => {return response.json()})
+      .then((response) => {
+        return response.json();
+      })
       .then((result) => {
         this._movie = result.movie;
         this._movie[`comments`] = result.comments;

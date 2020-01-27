@@ -42,4 +42,4 @@ export default class Filter extends AbstractComponent {
     this.getElement().querySelector(`#filter__${oldFilter}`).classList.remove(ACTIVE_FILTER_CLASS);
     this.getElement().querySelector(`#filter__${newFilter}`).classList.add(ACTIVE_FILTER_CLASS);
   }
-};
+}

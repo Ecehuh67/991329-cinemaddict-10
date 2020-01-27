@@ -52,14 +52,14 @@ export const renderChart = (ctx, cards) => {
       },
       scales: {
         xAxes: [{
-            stacked: true,
-            display: false,
+          stacked: true,
+          display: false,
         }],
         yAxes: [{
-            stacked: true,
-            ticks: {
-              padding: 40
-            }
+          stacked: true,
+          ticks: {
+            padding: 40
+          }
         }]
       }
     }
@@ -72,8 +72,12 @@ const uniqueGenres = (listOfGenres) => listOfGenres.slice().filter((genre, i) =>
 
 const countSimmilarGenres = (list, uniqueValues) => {
   let counterGenres = {};
-  list.forEach((item) => { return counterGenres[item] = 0});
-  uniqueValues.forEach((genre) => { return counterGenres[genre] += 1});
+  list.forEach((item) => {
+    counterGenres[item] = 0;
+  });
+  uniqueValues.forEach((genre) => {
+    counterGenres[genre] += 1;
+  });
 
   return counterGenres;
 };
