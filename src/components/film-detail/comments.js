@@ -24,6 +24,6 @@ export const createCommentsMarkup = (comments, emoji) => {
             </p>
           </div>
         </li>`
-      )
+      );
     }));
 };
