@@ -257,6 +257,7 @@ export default class PageController {
 
   _onFilterChange() {
     this._removeCards();
+    this._showingCardCount = SHOWING_CARD;
     this._renderCards(this._moviesModel.getCards().slice(0, SHOWING_CARD));
     this._renderLoadMoreButton();
   }
