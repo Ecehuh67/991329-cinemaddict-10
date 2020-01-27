@@ -9,12 +9,12 @@ const FilterTypes = {
   YEAR: `year`
 };
 
-const Unix_Time = {
+const UnixTime = {
   DAY: 86400000,
   WEEK: 604800000,
   MONTH: 2629743000,
   YEAR: 31556926000
-}
+};
 
 export default class Statistics extends AbstractSmartComponent {
   constructor(data) {
@@ -58,7 +58,7 @@ export default class Statistics extends AbstractSmartComponent {
     element.querySelector(`.statistic__filters`).addEventListener(`change`, (evt) => {
       this._filterType = evt.target.value;
 
-      switch(this._filterType) {
+      switch (this._filterType) {
         case FilterTypes.ALL_TIME:
           filteredCards = cards;
 
@@ -69,7 +69,7 @@ export default class Statistics extends AbstractSmartComponent {
         case FilterTypes.TODAY:
           filteredCards = cards.slice().filter((card) => {
             if (card.userDetails.watching_date) {
-              return (this._date - Unix_Time.DAY) < Date.parse(card.userDetails.watching_date);
+              return (this._date - UnixTime.DAY) < Date.parse(card.userDetails.watching_date);
             } else {
               return false;
             }
@@ -82,7 +82,7 @@ export default class Statistics extends AbstractSmartComponent {
         case FilterTypes.WEEK:
           filteredCards = cards.slice().filter((card) => {
             if (card.userDetails.watching_date) {
-              return (this._date - Unix_Time.WEEK) < Date.parse(card.userDetails.watching_date);
+              return (this._date - UnixTime.WEEK) < Date.parse(card.userDetails.watching_date);
             } else {
               return false;
             }
@@ -95,7 +95,7 @@ export default class Statistics extends AbstractSmartComponent {
         case FilterTypes.MONTH:
           filteredCards = cards.slice().filter((card) => {
             if (card.userDetails.watching_date) {
-              return (this._date - Unix_Time.MONTH) < Date.parse(card.userDetails.watching_date);
+              return (this._date - UnixTime.MONTH) < Date.parse(card.userDetails.watching_date);
             } else {
               return false;
             }
@@ -108,7 +108,7 @@ export default class Statistics extends AbstractSmartComponent {
         case FilterTypes.YEAR:
           filteredCards = cards.slice().filter((card) => {
             if (card.userDetails.watching_date) {
-              return (this._date - Unix_Time.YEAR) < Date.parse(card.userDetails.watching_date);
+              return (this._date - UnixTime.YEAR) < Date.parse(card.userDetails.watching_date);
             } else {
               return false;
             }
@@ -120,7 +120,7 @@ export default class Statistics extends AbstractSmartComponent {
           break;
       }
 
-    })
+    });
 
     this._resetChart();
 

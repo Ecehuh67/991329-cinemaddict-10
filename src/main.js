@@ -22,8 +22,6 @@ const randomRate = getRandomNumber(25);
 const statisticsComponent = new StatisticsComponent({model: moviesModel, rank: getRank(randomRate)});
 render(headerElement, new RankComponent(randomRate), RenderPosition.BEFOREEND);
 
-console.log(new ContainerComponent())
-
 const containerComponent = new ContainerComponent();
 const pageController = new PageController(containerComponent, moviesModel, api);
 
