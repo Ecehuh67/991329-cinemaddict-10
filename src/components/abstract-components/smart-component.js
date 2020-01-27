@@ -13,7 +13,7 @@ export default class AbstractSmartComponent extends AbstractComponent {
     this.removeElement();
     const newElement = this.getElement();
 
-    replaceElements(newElement, oldElement)
+    replaceElements(newElement, oldElement);
 
     this.recoverListeners();
   }

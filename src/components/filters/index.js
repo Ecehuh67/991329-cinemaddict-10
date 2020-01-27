@@ -1,6 +1,5 @@
 import AbstractComponent from '../abstract-components/component';
 import {createFiltersTemplate} from './template';
-import {getCardsByFilter} from '../../mocks/filter';
 
 const FILTER_ID_PREFIX = `filter__`;
 
@@ -31,8 +30,8 @@ export default class Filter extends AbstractComponent {
   setFilterChangeHandler(handler) {
     this.getElement().addEventListener(`click`, (evt) => {
       if (evt.target.tagName !== `A`) {
-        return
-      };
+        return;
+      }
 
       const filterName = getFilterNameById(evt.target.id);
       handler(filterName);
@@ -40,7 +39,7 @@ export default class Filter extends AbstractComponent {
   }
 
   setActive(oldFilter, newFilter) {
-    this.getElement().querySelector(`#filter__${oldFilter}`).classList.remove(`main-navigation__item--active`);
-    this.getElement().querySelector(`#filter__${newFilter}`).classList.add(`main-navigation__item--active`);
+    this.getElement().querySelector(`#filter__${oldFilter}`).classList.remove(ACTIVE_FILTER_CLASS);
+    this.getElement().querySelector(`#filter__${newFilter}`).classList.add(ACTIVE_FILTER_CLASS);
   }
 };

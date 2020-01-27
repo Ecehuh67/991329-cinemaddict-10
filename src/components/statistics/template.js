@@ -1,4 +1,4 @@
-import {getRank} from '../../utils/common';
+
 import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -13,11 +13,11 @@ export const renderChart = (ctx, cards) => {
     values = [];
   }
 
-  const columnColor = new Array(genresCategories.length).fill(`rgba(255,207,64,1)`)
+  const columnColor = new Array(genresCategories.length).fill(`rgba(255,207,64,1)`);
 
-  Chart.defaults.global.defaultFontFamily = "Open Sans";
+  Chart.defaults.global.defaultFontFamily = `Open Sans`;
   Chart.defaults.global.defaultFontSize = 16;
-  Chart.defaults.global.defaultFontColor = 'white';
+  Chart.defaults.global.defaultFontColor = `white`;
 
   return new Chart(ctx, {
     plugins: [ChartDataLabels],
@@ -41,7 +41,7 @@ export const renderChart = (ctx, cards) => {
     options: {
       layout: {
         padding: {
-          bottom: 0, //control
+          bottom: 0,
         }
       },
       legend: {
@@ -51,20 +51,20 @@ export const renderChart = (ctx, cards) => {
         enabled: false
       },
       scales: {
-            xAxes: [{
-                stacked: true,
-                display: false,
-            }],
-            yAxes: [{
-                stacked: true,
-                ticks: {
-                  padding: 40
-                }
-            }]
-        }
+        xAxes: [{
+            stacked: true,
+            display: false,
+        }],
+        yAxes: [{
+            stacked: true,
+            ticks: {
+              padding: 40
+            }
+        }]
+      }
     }
   });
-}
+};
 
 const getGenresListFromCards = (cards) => cards.slice().map((card) => card.filmInfo.genre).join().split(`,`);
 
@@ -72,11 +72,11 @@ const uniqueGenres = (listOfGenres) => listOfGenres.slice().filter((genre, i) =>
 
 const countSimmilarGenres = (list, uniqueValues) => {
   let counterGenres = {};
-  list.forEach((item) => counterGenres[item] = 0);
-  uniqueValues.forEach((genre) => counterGenres[genre] += 1);
+  list.forEach((item) => { return counterGenres[item] = 0});
+  uniqueValues.forEach((genre) => { return counterGenres[genre] += 1});
 
   return counterGenres;
-}
+};
 
 const getTopGenre = (cards) => {
   const genreList = getGenresListFromCards(cards);
@@ -90,7 +90,7 @@ const getTopGenre = (cards) => {
     if (topGenre === ``) {
       topGenre = item;
     } else if (counterGenres[item] > counterGenres[topGenre]) {
-        topGenre = item;
+      topGenre = item;
     }
   });
 
@@ -103,8 +103,8 @@ export const convertTime = (duration) => {
 
   return (
     {
-      hours: hours,
-      minutes: minutes
+      hours,
+      minutes
     }
   );
 };
@@ -118,26 +118,9 @@ export const createStatisticTemplate = (cards, rank) => {
 
   if (totalWatched.length > 0) {
 
-      totalDuration = totalWatched.map((it) => it.filmInfo.runtime).reduce((acc, num) => acc + num);
-    // totalDuration = totalWatched
-    //   .map((card) => card.duration
-    //     .split(' ')
-    //     .map((it) => parseInt(it, 10))
-    //       .map((number, i) => {
-    //         let duration = 0;
-    //         if (i === 0) {
-    //           duration += number * 60;
-    //         } else if (i === 1) {
-    //           duration += number;
-    //         }
-    //
-    //         return duration;
-    //       })
-    //       .reduce((acc, num) => acc + num))
-    //   .reduce((acc, film) => acc + film);
-
-      hours = convertTime(totalDuration).hours;
-      minutes = convertTime(totalDuration).minutes;
+    totalDuration = totalWatched.map((it) => it.filmInfo.runtime).reduce((acc, num) => acc + num);
+    hours = convertTime(totalDuration).hours;
+    minutes = convertTime(totalDuration).minutes;
   }
 
   const topGenre = getTopGenre(listOfFilms);
@@ -190,4 +173,4 @@ export const createStatisticTemplate = (cards, rank) => {
 
     </section>`
   );
-}
+};

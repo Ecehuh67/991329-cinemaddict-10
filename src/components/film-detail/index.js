@@ -25,9 +25,6 @@ export default class Popup extends AbstractSmartComponent {
     this._deleteButtomHandler = null;
     this._ratingButtomHandler = null;
     this._resetRatingButtonHandler = null;
-    // this._textValue = null;
-
-    // this._subscribeOnEmojiListEvents();
   }
 
   getTemplate() {
@@ -87,9 +84,9 @@ export default class Popup extends AbstractSmartComponent {
     const resetRating = () => {
       this._personalRating = 0;
       this._ratingButtomHandler();
-    }
+    };
 
-    watchedButton.addEventListener(`click`,resetRating);
+    watchedButton.addEventListener(`click`, resetRating);
 
     if (undoButton) {
       undoButton.addEventListener(`click`, resetRating);
@@ -136,7 +133,7 @@ export default class Popup extends AbstractSmartComponent {
             this._card.comments.push({
               id: `${randomId}`,
               author: `Karl Kugel`,
-              emotion: this._commentEmojiImage.slice(0,-4),
+              emotion: this._commentEmojiImage.slice(0, -4),
               comment: this._textValue,
               date: new Date().toISOString(),
             });
@@ -180,7 +177,7 @@ export default class Popup extends AbstractSmartComponent {
     this._recoverResetRatingButtonHandler();
     this._recoverRatingButtomHandler();
     this._recoverDeleteButtomHandler();
-    this._recoverAddNewCommentHandler()
+    this._recoverAddNewCommentHandler();
     this._recoverAddToWatchlistHandler();
     this._recoverAddToWatchedHandler();
     this._recoverAddToFavoritesHandler();
@@ -207,6 +204,7 @@ export default class Popup extends AbstractSmartComponent {
   }
 
   _getUserCommentInput() {
-    return this._textElement = this.getElement().querySelector(`.film-details__comment-input`);
+    this._textElement = this.getElement().querySelector(`.film-details__comment-input`);
+    return this._textElement;
   }
 }

@@ -204,17 +204,23 @@ export default class PageController {
 
       this._api.deleteComment(oldId)
         .then(() => {
-          this._moviesModel.updateCard(oldData.id, card);
-          this._updateCards(this._showingCardCount);
-          movieController.render(card);
+          const isSuccess = this._moviesModel.updateCard(oldData.id, card);
+
+          if (isSuccess) {
+            this._updateCards(this._showingCardCount);
+            movieController.render(card);
+          }
         });
 
     } else if (oldData === null) {
       this._api.createComment(newData)
         .then((MovieModel) => {
-          this._moviesModel.updateCard(MovieModel.id, MovieModel);
-          this._updateCards(this._showingCardCount);
-          movieController.render(MovieModel);
+          const isSuccess = this._moviesModel.updateCard(MovieModel.id, MovieModel);
+
+          if (isSuccess) {
+            this._updateCards(this._showingCardCount);
+            movieController.render(MovieModel);
+          }
         });
 
     } else if (newData === NEW_RATING_VALUE) {

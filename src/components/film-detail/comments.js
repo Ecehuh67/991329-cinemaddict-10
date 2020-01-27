@@ -1,4 +1,3 @@
-import {getRandomNumber} from '../../utils/common';
 import {formateDate} from '../../utils/common';
 
 export const createCommentsMarkup = (comments, emoji) => {
@@ -27,4 +26,4 @@ export const createCommentsMarkup = (comments, emoji) => {
         </li>`
       )
     }));
-}
+};
