@@ -229,6 +229,8 @@ export default class PageController {
 
       this._api.updateCard(oldData.id, oldData)
       .then((MovieModel) => {
+
+
         const isSuccess = this._moviesModel.updateCard(oldData.id, oldData);
 
         if (isSuccess) {
@@ -241,7 +243,6 @@ export default class PageController {
       this._api.updateCard(oldData.id, newData)
         .then((MovieModel) => {
           const isSuccess = this._moviesModel.updateCard(oldData.id, newData);
-
           if (isSuccess) {
             movieController.render(MovieModel);
             this._updateCards(this._showingCardCount);
