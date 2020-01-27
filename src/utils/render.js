@@ -27,10 +27,10 @@ export const remove = (component) => {
 };
 
 export const replaceSort = (container) => {
-  const sortElement = document.querySelector(`.sort`);
-  const filmsContainerElement = document.querySelector(`.films`);
+  const filterElement = document.querySelector(`.main-navigation`);
+  const statisticElement = document.querySelector(`.statistic`);
 
-  container.insertBefore(sortElement, filmsContainerElement);
+  container.insertBefore(filterElement, statisticElement);
 };
 
 export const replace = (newComponent, oldComponent) => {

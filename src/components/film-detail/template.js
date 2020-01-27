@@ -1,9 +1,14 @@
 import {formateDate, formatTime, getRandomDate} from '../../utils/common';
 import {createCommentsMarkup} from './comments';
 import {generateUserRatingMarkup} from './user-rating';
+import {getFormatedRuntime} from '../card/template';
 
-export const createDetailInfoTemplate = (card, options, point) => {
-  const {title, rate, genre, poster, description, comments, isAddedToWatch, isWatched, isFavorite, userRating} = card;
+export const createDetailInfoTemplate = (card, options) => {
+  const {title, alternative_title, poster, total_rating, age_rating, director, writers, actors, runtime, genre, description} = card.filmInfo;
+
+  const {date, release_country} = card.filmInfo.release;
+  const {personal_rating, watchlist, already_watched, favorite} = card.userDetails;
+  const {comments} = card;
 
   const createGenresmarkup = (genres) => {
     return (
@@ -21,16 +26,18 @@ export const createDetailInfoTemplate = (card, options, point) => {
     );
   };
 
-  const date = formateDate(getRandomDate());
-  const duration = formatTime(getRandomDate());
-  const {commentEmojiImage} = options;
-  const genres = createGenreTemplate(genre);
+  const dataRelease = formateDate(date);
+  // const date = formateDate(dataRelease);
+  const duration = getFormatedRuntime(runtime);
   const isGenres = genre.length > 1;
+  const {commentEmojiImage} = options;
+
+  const genres = createGenreTemplate(genre);
 
   const newDescription = description.length > 139 ? description.substring(0, 139).concat(`...`) : ``;
 
-  const commentsMarkup = createCommentsMarkup(comments);
-  const userRatingMarkup = generateUserRatingMarkup(userRating);
+  // const commentsMarkup = createCommentsMarkup(comments);
+  const userRatingMarkup = generateUserRatingMarkup(personal_rating);
 
   return (
     `<section class="film-details">
@@ -50,30 +57,30 @@ export const createDetailInfoTemplate = (card, options, point) => {
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
                   <h3 class="film-details__title">${title}</h3>
-                  <p class="film-details__title-original">Original: ${title}</p>
+                  <p class="film-details__title-original">Original: ${alternative_title}</p>
                 </div>
 
                 <div class="film-details__rating">
-                  <p class="film-details__total-rating">${rate}</p>
+                  <p class="film-details__total-rating">${total_rating}</p>
                 </div>
               </div>
 
               <table class="film-details__table">
                 <tr class="film-details__row">
                   <td class="film-details__term">Director</td>
-                  <td class="film-details__cell">Anthony Mann</td>
+                  <td class="film-details__cell">${director}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Writers</td>
-                  <td class="film-details__cell">Anne Wigton, Heinz Herald, Richard Weil</td>
+                  <td class="film-details__cell">${writers}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Actors</td>
-                  <td class="film-details__cell">Erich von Stroheim, Mary Beth Hughes, Dan Duryea</td>
+                  <td class="film-details__cell">${actors}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${date}</td>
+                  <td class="film-details__cell">${dataRelease}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
@@ -81,7 +88,7 @@ export const createDetailInfoTemplate = (card, options, point) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
-                  <td class="film-details__cell">USA</td>
+                  <td class="film-details__cell">${release_country}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">${isGenres ? `Genres` : `Genre`}</td>
@@ -96,19 +103,19 @@ export const createDetailInfoTemplate = (card, options, point) => {
           </div>
 
           <section class="film-details__controls">
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${isAddedToWatch ? `checked` : ``}>
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${watchlist ? `checked` : ``}>
             <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isWatched ? `checked` : ``}>
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${already_watched ? `checked` : ``}>
             <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${isFavorite ? `checked` : ``}>
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${favorite ? `checked` : ``}>
             <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
           </section>
         </div>
 
         <div class="form-details__middle-container">
-          ${isWatched ?
+          ${already_watched ?
           `<section class="film-details__user-rating-wrap">
             <div class="film-details__user-rating-controls">
               <button class="film-details__watched-reset" type="button">Undo</button>
@@ -135,7 +142,7 @@ export const createDetailInfoTemplate = (card, options, point) => {
             <h3 class="film-details__comments-title">${comments.length === 1 ? `Comment` : `Comments`} <span class="film-details__comments-count">${comments.length}</span></h3>
 
             <ul class="film-details__comments-list">
-              ${commentsMarkup}
+              ${createCommentsMarkup(comments)}
             </ul>
 
             <div class="film-details__new-comment">

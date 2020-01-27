@@ -6,38 +6,31 @@ import FilterController from './controllers/filter';
 import FilterComponent from './components/filters/index';
 import MoviesModel from './models/movies';
 import StatisticsComponent from './components/statistics/index';
-import {generateCards} from './mocks/card';
-import {generateFilters} from './mocks/filter';
+import API from './api.js';
 import {getRandomNumber, getRank} from './utils/common';
 import {render, RenderPosition, replaceSort} from './utils/render';
 
-const FILM_COUNT = 15;
+const AUTHORIZATION = `Basic eo0w590ik29889a`;
+const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
 
-console.log([])
 
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
 
-// Randomly generate a number for getting Rate of user
+const api = new API(END_POINT, AUTHORIZATION);
+const moviesModel = new MoviesModel();
+
 const randomRate = getRandomNumber(25);
+const statisticsComponent = new StatisticsComponent({model: moviesModel, rank: getRank(randomRate)});
 render(headerElement, new RankComponent(randomRate), RenderPosition.BEFOREEND);
 
-const cards = generateCards(FILM_COUNT);
-const moviesModel = new MoviesModel();
-moviesModel.setCards(cards);
+const containerComponent = new ContainerComponent();
+const pageController = new PageController(containerComponent, moviesModel, api);
 
 const filterController = new FilterController(mainElement, moviesModel);
-filterController.render();
+// filterController.render();
+// render(mainElement, containerComponent, RenderPosition.BEFOREEND);
 
-const containerComponent = new ContainerComponent();
-render(mainElement, containerComponent, RenderPosition.BEFOREEND);
-
-const pageController = new PageController(containerComponent, moviesModel);
-
-pageController.render();
-replaceSort(mainElement);
-
-const statisticsComponent = new StatisticsComponent(moviesModel, getRank(randomRate));
 render(mainElement, statisticsComponent, RenderPosition.BEFOREEND);
 statisticsComponent.hide();
 
@@ -58,5 +51,16 @@ filterController.showScreen((menuItem) => {
   }
 });
 
-const totalFilms = document.querySelector(`.footer__statistics p`);
-totalFilms.textContent = `${moviesModel.getAllCards().length} movies inside`;
+api.getCards()
+  .then((cards => {
+    moviesModel.setCards(cards);
+    filterController.render();
+    pageController.render();
+
+    render(mainElement, containerComponent, RenderPosition.BEFOREEND);
+    replaceSort(mainElement);
+
+
+    const totalFilms = document.querySelector(`.footer__statistics p`);
+    totalFilms.textContent = `${moviesModel.getAllCards().length} movies inside`;
+  }));

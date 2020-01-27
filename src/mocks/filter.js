@@ -2,11 +2,11 @@ import {Filters} from './consts';
 
 const getAllCards = (cards) => cards;
 
-const getWatchlistCards = (cards) => cards.filter((card) => card.isAddedToWatch);
+const getWatchlistCards = (cards) => cards.filter((card) => card.userDetails.watchlist);
 
-const getHistoryCards = (cards) => cards.filter((card) => card.isWatched);
+const getHistoryCards = (cards) => cards.filter((card) => card.userDetails.already_watched);
 
-const getFavoritesCards = (cards) => cards.filter((card) => card.isFavorite);
+const getFavoritesCards = (cards) => cards.filter((card) => card.userDetails.favorite);
 
 export const getCardsByFilter = (cards, filterType) => {
 

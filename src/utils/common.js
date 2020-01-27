@@ -1,5 +1,10 @@
 import moment from 'moment';
 
+const RATED_POINTS = {
+  RATING: `total_rating`,
+  COMMENTS: `comments`
+};
+
 export const getRandomArrayItem = (array) => {
   return array[Math.floor(Math.random() * array.length)];
 };
@@ -31,16 +36,15 @@ export const getTime = () => {
 };
 
 export const getConditionFilms = (cards, amount, category) => {
-  const values = cards.map((card) => card[category]).sort((a, b) => a - b).slice(-amount);
-  const newCards = cards.filter((card) => values.find((it) => it === card[category])).slice(-amount);
+  const values = cards.map((card) => {
+    return category === RATED_POINTS.RATING ? card.filmInfo[category] : card[category].length;
+  }).sort((a, b) => a - b).slice(-amount);
+  const newCards = cards.filter((card) => values.find((it) => {
+    return category === RATED_POINTS.RATING ? it === card.filmInfo[category] : it === card[category].length;
+  })).slice(-amount);
 
   return newCards;
 };
-
-// export const getRank = (count) => {
-//   let rank = ranks[Object.keys(ranks).find((it) => count <= it)];
-//   return rank;
-// };
 
 export const getRank = (count) => {
   let rank;
@@ -65,6 +69,10 @@ export const getRank = (count) => {
 
 export const formateDate = (date) => {
   return moment(date).format(`DD MMMM YYYY`);
+};
+
+export const formateDateToYear = (date) => {
+  return moment(date).format(`YYYY`);
 };
 
 export const formatTime = (date) => {
