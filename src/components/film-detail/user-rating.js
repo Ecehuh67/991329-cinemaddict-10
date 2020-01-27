@@ -1,5 +1,7 @@
 import {USER_RATING_COUNT} from '../../mocks/consts';
 
+
+
 export const generateUserRatingMarkup = (rating) => {
   return new Array(USER_RATING_COUNT)
     .fill(``)

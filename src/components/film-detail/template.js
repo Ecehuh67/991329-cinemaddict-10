@@ -43,7 +43,6 @@ export const createDetailInfoTemplate = (card, options) => {
 
   const newDescription = description.length > 139 ? description.substring(0, 139).concat(`...`) : ``;
 
-  // const commentsMarkup = createCommentsMarkup(comments);
   const userRatingMarkup = generateUserRatingMarkup(personalRating);
 
   return (
