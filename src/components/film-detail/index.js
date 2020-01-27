@@ -94,14 +94,16 @@ export default class Popup extends AbstractSmartComponent {
   }
 
   _recoverRatingButtomHandler() {
-    this
-      .getElement()
-      .querySelectorAll(`.film-details__user-rating-label`)
-      .forEach((label) => label.addEventListener(`click`, (evt) => {
-        this._personalRating = evt.target.textContent;
-        this._ratingButtomHandler();
-      }));
-
+      const inputElements = this.getElement().querySelectorAll(`.film-details__user-rating-input`);
+      inputElements.forEach((item) => {
+        item.addEventListener(`click`, (evt) => {
+          this._personalRating = evt.target.value;
+          this._ratingButtomHandler();
+          inputElements.forEach((it) => {
+            it.setAttribute(`disabled`, `disabled`)
+          });
+        })
+      });
   }
 
   _recoverDeleteButtomHandler() {
@@ -121,10 +123,9 @@ export default class Popup extends AbstractSmartComponent {
   }
 
   _recoverAddNewCommentHandler() {
-    this
-      .getElement()
-      .querySelector(`.film-details__comment-input`).
-      addEventListener(`keydown`, (evt) => {
+    const textElem = this.getElement().querySelector(`.film-details__comment-input`);
+
+    textElem.addEventListener(`keydown`, (evt) => {
         const isSubmit = evt.keyCode === ENTER_KEYCODE && evt.ctrlKey || evt.keyCode === ENTER_KEYCODE && evt.metaKey;
         if (isSubmit) {
           this._textValue = he.encode(evt.target.value);
@@ -138,6 +139,9 @@ export default class Popup extends AbstractSmartComponent {
               date: new Date().toISOString(),
             });
           }
+
+          textElem.setAttribute(`readonly`, `readonly`);
+
           this._addNewCommentHandler();
         }
       });
