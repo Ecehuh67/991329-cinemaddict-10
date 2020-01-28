@@ -5,6 +5,7 @@ import {createDetailInfoTemplate} from './template';
 import he from 'he';
 
 const ENTER_KEYCODE = 13;
+const SHAKE_ANIMATION_TIMEOUT = `2s`;
 
 export default class Popup extends AbstractSmartComponent {
   constructor(card) {
@@ -210,5 +211,12 @@ export default class Popup extends AbstractSmartComponent {
   _getUserCommentInput() {
     this._textElement = this.getElement().querySelector(`.film-details__comment-input`);
     return this._textElement;
+  }
+
+  _shake() {
+    const element = this.getElement().querySelector(`.film-details__comment-input`);
+    element.style.animationName = `shake`;
+    element.style.animationDuration = SHAKE_ANIMATION_TIMEOUT;
+    element.removeAttribute(`readonly`, `readonly`);
   }
 }

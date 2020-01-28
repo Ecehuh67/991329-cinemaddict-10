@@ -155,4 +155,10 @@ export default class MovieController {
   destroy() {
     remove(this._cardComponent);
   }
+
+  _onError() {
+    if (this._mode === FilmMode.DETAILS) {
+      this._popupComponent._shake();
+    }
+  }
 }

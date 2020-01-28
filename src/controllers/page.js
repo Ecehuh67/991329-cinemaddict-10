@@ -221,6 +221,9 @@ export default class PageController {
             this._updateCards(this._showingCardCount);
             movieController.render(MovieModel);
           }
+        })
+        .catch(() => {
+          movieController._onError();
         });
 
     } else if (newData === NEW_RATING_VALUE) {
@@ -237,6 +240,10 @@ export default class PageController {
           movieController.render(MovieModel);
           this._updateCards(this._showingCardCount);
         }
+      })
+      .catch(() => {
+        oldData.userDetails[`personal_rating`] = 0;
+        movieController.render(oldData);
       });
 
     } else {
