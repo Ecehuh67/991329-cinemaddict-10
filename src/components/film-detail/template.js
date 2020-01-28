@@ -3,12 +3,11 @@ import {createCommentsMarkup} from './comments';
 import {generateUserRatingMarkup} from './user-rating';
 import {getFormatedRuntime} from '../card/template';
 
-export const createDetailInfoTemplate = (card, options) => {
+export const createDetailInfoTemplate = (card, options, buttonName, id) => {
   const {title, poster, director, writers, actors, runtime, genre, description} = card.filmInfo;
   const alternativeTitle = card.filmInfo[`alternative_title`];
   const ageRating = card.filmInfo[`age_rating`];
   const totalRating = card.filmInfo[`total_rating`];
-
 
   const {date} = card.filmInfo.release;
   const releaseCountry = card.filmInfo[`release_country`];
@@ -34,7 +33,6 @@ export const createDetailInfoTemplate = (card, options) => {
   };
 
   const dataRelease = formateDate(date);
-  // const date = formateDate(dataRelease);
   const duration = getFormatedRuntime(runtime);
   const isGenres = genre.length > 1;
   const {commentEmojiImage} = options;
@@ -44,6 +42,7 @@ export const createDetailInfoTemplate = (card, options) => {
   const newDescription = description.length > 139 ? description.substring(0, 139).concat(`...`) : ``;
 
   const userRatingMarkup = generateUserRatingMarkup(personalRating);
+  const commentsMarkup = createCommentsMarkup(comments, buttonName, id);
 
   return (
     `<section class="film-details">
@@ -147,7 +146,7 @@ export const createDetailInfoTemplate = (card, options) => {
             <h3 class="film-details__comments-title">${comments.length === 1 ? `Comment` : `Comments`} <span class="film-details__comments-count">${comments.length}</span></h3>
 
             <ul class="film-details__comments-list">
-              ${createCommentsMarkup(comments)}
+              ${commentsMarkup}
             </ul>
 
             <div class="film-details__new-comment">

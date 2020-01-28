@@ -18,6 +18,9 @@ export default class Popup extends AbstractSmartComponent {
     this._deleteElement = null;
     this._personalRating = null;
 
+    this._deleteButtonName = null;
+    this._deleteId = null;
+
     this._closeHandler = null;
     this._addToWatchlistHandler = null;
     this._addToWatchedHandler = null;
@@ -29,7 +32,7 @@ export default class Popup extends AbstractSmartComponent {
   }
 
   getTemplate() {
-    return createDetailInfoTemplate(this._card, {commentEmojiImage: this._commentEmojiImage});
+    return createDetailInfoTemplate(this._card, {commentEmojiImage: this._commentEmojiImage}, this._deleteButtonName, this._deleteId);
   }
 
   setButtonCloseHandler(handler) {
@@ -218,5 +221,11 @@ export default class Popup extends AbstractSmartComponent {
     element.style.animationName = `shake`;
     element.style.animationDuration = SHAKE_ANIMATION_TIMEOUT;
     element.removeAttribute(`readonly`, `readonly`);
+  }
+
+  setData(data, id) {
+    this._deleteButtonName = data;
+    this._deleteId = id;
+    this.rerender();
   }
 }

@@ -12,6 +12,8 @@ import {render, RenderPosition, replaceSort} from './utils/render';
 const AUTHORIZATION = `Basic eo0w590ik29889a`;
 const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
 
+
+const previewMessage = document.querySelector(`.main_preview`);
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
 
@@ -49,6 +51,7 @@ filterController.showScreen((menuItem) => {
 
 api.getCards()
   .then((cards) => {
+    previewMessage.remove();
     moviesModel.setCards(cards);
     filterController.render();
     pageController.render();

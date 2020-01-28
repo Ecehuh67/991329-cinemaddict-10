@@ -7,6 +7,7 @@ const FilmMode = {
   DEFAULT: `default`,
   DETAILS: `details`
 };
+const DELETE_BUTTON_NAME_FOR_SENDING = `Deleting...`;
 
 export default class MovieController {
   constructor(container, onDataChange, onViewChange) {
@@ -110,6 +111,8 @@ export default class MovieController {
 
   _deleteCommentButtonHandler() {
     this._deleteElement = this._popupComponent._deleteElement.querySelector(`.film-details__comment-text`).dataset.id;
+
+    this._popupComponent.setData(DELETE_BUTTON_NAME_FOR_SENDING, this._deleteElement);
 
     this._onDataChange(this, this._card, null);
   }

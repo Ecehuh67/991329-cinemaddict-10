@@ -1,15 +1,16 @@
 import {formateDate} from '../../utils/common';
 
-export const createCommentsMarkup = (comments, emoji) => {
+export const createCommentsMarkup = (comments, buttonName, idElement) => {
 
-  let emojiList = new Array(comments.length).fill(`smile.png`);
-
-  if (emoji) {
-    emojiList[comments.length - 1] = emoji;
-  }
+  let buttonValue = `Delete`;
 
   return (comments
     .map(({author, emotion, comment, date, id}) => {
+
+      if (idElement === id) {
+        buttonValue = `${buttonName}`;
+      }
+
       return (
         `<li class="film-details__comment">
           <span class="film-details__comment-emoji">
@@ -20,7 +21,7 @@ export const createCommentsMarkup = (comments, emoji) => {
             <p class="film-details__comment-info">
               <span class="film-details__comment-author">${author}</span>
               <span class="film-details__comment-day">${formateDate(date)}</span>
-              <button class="film-details__comment-delete">Delete</button>
+              <button class="film-details__comment-delete">${buttonValue}</button>
             </p>
           </div>
         </li>`
