@@ -38,7 +38,8 @@ export const getTime = () => {
 export const getConditionFilms = (cards, amount, category) => {
   const values = cards.map((card) => {
     return category === RATED_POINTS.RATING ? card.filmInfo[category] : card[category].length;
-  }).sort((a, b) => a - b).slice(-amount);
+  }).sort((a, b) => a - b).slice(-amount).sort((a, b) => b - a);
+
   const newCards = cards.filter((card) => values.find((it) => {
     return category === RATED_POINTS.RATING ? it === card.filmInfo[category] : it === card[category].length;
   })).slice(-amount);
@@ -69,6 +70,10 @@ export const getRank = (count) => {
 
 export const formateDate = (date) => {
   return moment(date).format(`DD MMMM YYYY`);
+};
+
+export const formateDateForComments = (date) => {
+  return moment(date).format(`YYYY/MM/DD/h:m`);
 };
 
 export const formateDateToYear = (date) => {

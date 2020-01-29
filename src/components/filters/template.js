@@ -1,10 +1,12 @@
+const UNCOUNTABLE_FILTER = `All`;
+
 const createFilterMarkup = (filter, isActive) => {
   const {name, count} = filter;
 
   return (
     `<a href="#${name}" class="main-navigation__item
     ${isActive ? `main-navigation__item--active` : ``}" id="filter__${name}">${name}
-      <span class="main-navigation__item-count">${count}</span>
+      ${name === UNCOUNTABLE_FILTER ? `` : `<span class="main-navigation__item-count">${count}</span>`}
     </a>`
   );
 };

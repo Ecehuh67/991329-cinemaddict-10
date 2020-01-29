@@ -14,6 +14,7 @@ export const createFilmCardTempalate = (card) => {
   const {watchlist, favorite} = card.userDetails;
   const watched = card.userDetails[`already_watched`];
   const {date} = card.filmInfo.release;
+  const newDescription = description.length > 139 ? description.substring(0, 139).concat(`...`) : ``;
 
   const duration = getFormatedRuntime(runtime);
 
@@ -27,7 +28,7 @@ export const createFilmCardTempalate = (card) => {
         <span class="film-card__genre">${genre.join(`, `)}</span>
       </p>
       <img src=${poster} alt="" class="film-card__poster">
-      <p class="film-card__description">${description}</p>
+      <p class="film-card__description">${newDescription ? newDescription : description}</p>
       <a class="film-card__comments">${comments.length} ${comments.length === 1 ? `comment` : `comments`}</a>
       <form class="film-card__controls">
         <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${watchlist ? `film-card__controls-item--active` : ``}">Add to watchlist</button>

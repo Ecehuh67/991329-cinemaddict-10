@@ -1,4 +1,7 @@
-import {formateDate} from '../../utils/common';
+import {formateDateForComments} from '../../utils/common';
+
+
+
 
 export const createCommentsMarkup = (comments, buttonName, idElement) => {
 
@@ -20,7 +23,7 @@ export const createCommentsMarkup = (comments, buttonName, idElement) => {
             <p class="film-details__comment-text" data-id="${id}">${comment}</p>
             <p class="film-details__comment-info">
               <span class="film-details__comment-author">${author}</span>
-              <span class="film-details__comment-day">${formateDate(date)}</span>
+              <span class="film-details__comment-day">${formateDateForComments(date)}</span>
               <button class="film-details__comment-delete">${buttonValue}</button>
             </p>
           </div>
