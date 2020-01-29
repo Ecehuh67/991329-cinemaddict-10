@@ -1,5 +1,10 @@
 import MovieModel from './models/movie';
 
+const OK_SERVER_ANSWER = {
+  'min': 200,
+  'max': 300
+}
+
 const Method = {
   GET: `GET`,
   POST: `POST`,
@@ -8,7 +13,7 @@ const Method = {
 };
 
 const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
+  if (response.status >= OK_SERVER_ANSWER.min && response.status < OK_SERVER_ANSWER.max) {
     return response;
   } else {
     throw new Error(`${response.status}: ${response.statusText}`);
@@ -35,7 +40,7 @@ const API = class {
           .all(cards.map((card) => this._load({url: `comments/${card.id}`})));
       })
       .then((response) => {
-        return Promise.all(response.map((it) => it.json()));
+        return Promise.all(response.map((card) => card.json()));
       })
       .then((comments) => {
         this._movies.forEach((movie, index) => {
@@ -47,11 +52,11 @@ const API = class {
       .then(MovieModel.parseCards);
   }
 
-  updateCard(id, data) {
+  updateCard(id, movie) {
     return this._load({
       url: `movies/${id}`,
       method: Method.PUT,
-      body: JSON.stringify(data.convertToServer()),
+      body: JSON.stringify(movie.convertToServer()),
       headers: new Headers({'Content-Type': `application/json`})
     })
       .then((response) => response.json())

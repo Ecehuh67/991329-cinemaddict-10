@@ -1,9 +1,9 @@
 export default class Movie {
-  constructor(data) {
-    this.id = data[`id`];
-    this.filmInfo = data[`film_info`];
-    this.userDetails = data[`user_details`];
-    this.comments = data[`comments`];
+  constructor(cards) {
+    this.id = cards[`id`];
+    this.filmInfo = cards[`film_info`];
+    this.userDetails = cards[`user_details`];
+    this.comments = cards[`comments`];
   }
 
   toRAW() {

@@ -6,6 +6,7 @@ import he from 'he';
 
 const ENTER_KEYCODE = 13;
 const SHAKE_ANIMATION_TIMEOUT = `2s`;
+const ID_RANGE_LIMIT = 10000;
 
 export default class Popup extends AbstractSmartComponent {
   constructor(card) {
@@ -134,7 +135,7 @@ export default class Popup extends AbstractSmartComponent {
       if (isSubmit) {
         this._textValue = he.encode(evt.target.value);
         if (this._textValue) {
-          const randomId = getRandomNumber(10000);
+          const randomId = getRandomNumber(ID_RANGE_LIMIT);
           this._card.comments.push({
             id: `${randomId}`,
             author: `Karl Kugel`,

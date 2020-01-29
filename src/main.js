@@ -11,7 +11,7 @@ import {render, RenderPosition, replaceSort} from './utils/render';
 
 const AUTHORIZATION = `Basic eo0w590ik29889a`;
 const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
-
+const RANDOM_COUNT_WATCHED_FILMS = 25;
 
 const previewMessage = document.querySelector(`.main_preview`);
 const headerElement = document.querySelector(`.header`);
@@ -20,7 +20,7 @@ const mainElement = document.querySelector(`.main`);
 const api = new API(END_POINT, AUTHORIZATION);
 const moviesModel = new MoviesModel();
 
-const randomRate = getRandomNumber(25);
+const randomRate = getRandomNumber(RANDOM_COUNT_WATCHED_FILMS);
 const statisticsComponent = new StatisticsComponent({model: moviesModel, rank: getRank(randomRate)});
 render(headerElement, new RankComponent(randomRate), RenderPosition.BEFOREEND);
 

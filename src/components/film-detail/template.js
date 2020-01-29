@@ -3,6 +3,8 @@ import {createCommentsMarkup} from './comments';
 import {generateUserRatingMarkup} from './user-rating';
 import {getFormatedRuntime} from '../card/template';
 
+const MAX_LENGTH_DESCRIPTION = 139;
+
 export const createDetailInfoTemplate = (card, options, buttonName, id) => {
   const {title, poster, director, writers, actors, runtime, genre, description} = card.filmInfo;
   const alternativeTitle = card.filmInfo[`alternative_title`];
@@ -39,7 +41,7 @@ export const createDetailInfoTemplate = (card, options, buttonName, id) => {
 
   const genres = createGenreTemplate(genre);
 
-  const newDescription = description.length > 139 ? description.substring(0, 139).concat(`...`) : ``;
+  const newDescription = description.length > MAX_LENGTH_DESCRIPTION ? description.substring(0, MAX_LENGTH_DESCRIPTION).concat(`...`) : ``;
 
   const userRatingMarkup = generateUserRatingMarkup(personalRating);
   const commentsMarkup = createCommentsMarkup(comments, buttonName, id);

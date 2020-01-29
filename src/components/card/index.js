@@ -19,7 +19,7 @@ export default class Card extends AbstractComponent {
     ];
 
     const elements = [];
-    cardHandlerElements.forEach((it) => elements.push(this.getElement().querySelector(it)));
+    cardHandlerElements.forEach((container) => elements.push(this.getElement().querySelector(container)));
 
     return elements;
   }

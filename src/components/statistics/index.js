@@ -17,10 +17,10 @@ const UnixTime = {
 };
 
 export default class Statistics extends AbstractSmartComponent {
-  constructor(data) {
+  constructor(statistic) {
     super();
-    this._model = data.model;
-    this._rank = data.rank;
+    this._model = statistic.model;
+    this._rank = statistic.rank;
     this._date = Math.round(new Date().getTime());
     this._filteredCards = null;
 
@@ -70,8 +70,6 @@ export default class Statistics extends AbstractSmartComponent {
           filteredCards = cards.slice().filter((card) => {
             if (card.userDetails.watching_date) {
               return (this._date - UnixTime.DAY) < Date.parse(card.userDetails.watching_date);
-            } else {
-              return false;
             }
           });
 
@@ -83,8 +81,6 @@ export default class Statistics extends AbstractSmartComponent {
           filteredCards = cards.slice().filter((card) => {
             if (card.userDetails.watching_date) {
               return (this._date - UnixTime.WEEK) < Date.parse(card.userDetails.watching_date);
-            } else {
-              return false;
             }
           });
 
@@ -96,8 +92,6 @@ export default class Statistics extends AbstractSmartComponent {
           filteredCards = cards.slice().filter((card) => {
             if (card.userDetails.watching_date) {
               return (this._date - UnixTime.MONTH) < Date.parse(card.userDetails.watching_date);
-            } else {
-              return false;
             }
           });
 
@@ -109,8 +103,6 @@ export default class Statistics extends AbstractSmartComponent {
           filteredCards = cards.slice().filter((card) => {
             if (card.userDetails.watching_date) {
               return (this._date - UnixTime.YEAR) < Date.parse(card.userDetails.watching_date);
-            } else {
-              return false;
             }
           });
 
