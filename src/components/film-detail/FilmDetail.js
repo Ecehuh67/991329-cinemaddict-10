@@ -100,12 +100,12 @@ export default class Popup extends AbstractSmartComponent {
 
   _recoverRatingButtomHandler() {
     const inputElements = this.getElement().querySelectorAll(`.film-details__user-rating-input`);
-    inputElements.forEach((item) => {
-      item.addEventListener(`click`, (evt) => {
+    inputElements.forEach((element) => {
+      element.addEventListener(`click`, (evt) => {
         this._personalRating = evt.target.value;
         this._ratingButtomHandler();
-        inputElements.forEach((it) => {
-          it.setAttribute(`disabled`, `disabled`);
+        inputElements.forEach((input) => {
+          input.setAttribute(`disabled`, `disabled`);
         });
       });
     });

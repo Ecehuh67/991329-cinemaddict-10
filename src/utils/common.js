@@ -40,8 +40,8 @@ export const getConditionFilms = (cards, amount, category) => {
     return category === RATED_POINTS.RATING ? card.filmInfo[category] : card[category].length;
   }).sort((a, b) => a - b).slice(-amount).sort((a, b) => b - a);
 
-  const newCards = cards.filter((card) => values.find((it) => {
-    return category === RATED_POINTS.RATING ? it === card.filmInfo[category] : it === card[category].length;
+  const newCards = cards.filter((card) => values.find((value) => {
+    return category === RATED_POINTS.RATING ? value === card.filmInfo[category] : value === card[category].length;
   })).slice(-amount);
 
   return newCards;

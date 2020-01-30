@@ -71,8 +71,8 @@ const uniqueGenres = (listOfGenres) => listOfGenres.slice().filter((genre, i) =>
 
 const countSimmilarGenres = (list, uniqueValues) => {
   let counterGenres = {};
-  list.forEach((item) => {
-    counterGenres[item] = 0;
+  list.forEach((element) => {
+    counterGenres[element] = 0;
   });
   uniqueValues.forEach((genre) => {
     counterGenres[genre] += 1;
@@ -89,11 +89,11 @@ const getTopGenre = (cards) => {
 
   let topGenre = ``;
 
-  Object.keys(counterGenres).forEach((item) => {
+  Object.keys(counterGenres).forEach((genre) => {
     if (topGenre === ``) {
-      topGenre = item;
-    } else if (counterGenres[item] > counterGenres[topGenre]) {
-      topGenre = item;
+      topGenre = genre;
+    } else if (counterGenres[genre] > counterGenres[topGenre]) {
+      topGenre = genre;
     }
   });
 
@@ -121,7 +121,7 @@ export const createStatisticTemplate = (cards, rank) => {
 
   if (totalWatched.length > 0) {
 
-    totalDuration = totalWatched.map((it) => it.filmInfo.runtime).reduce((acc, num) => acc + num);
+    totalDuration = totalWatched.map((card) => card.filmInfo.runtime).reduce((acc, num) => acc + num);
     hours = convertTime(totalDuration).hours;
     minutes = convertTime(totalDuration).minutes;
   }

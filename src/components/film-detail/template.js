@@ -25,7 +25,7 @@ export const createDetailInfoTemplate = (card, options, buttonName, id) => {
   };
 
   const createGenreTemplate = (genres) => {
-    const genresTemplate = genres.map((it) => createGenresmarkup(it)).join(`\n`);
+    const genresTemplate = genres.map((genre) => createGenresmarkup(genre)).join(`\n`);
 
     return (
       `<td class="film-details__cell">

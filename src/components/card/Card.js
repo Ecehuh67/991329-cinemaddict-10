@@ -27,8 +27,8 @@ export default class Card extends AbstractComponent {
   setClickHandler(handler) {
     this
     .getHandlerElements()
-    .forEach((it) => {
-      it.addEventListener(`click`, handler);
+    .forEach((container) => {
+      container.addEventListener(`click`, handler);
     });
   }
 

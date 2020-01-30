@@ -1,9 +1,9 @@
-import ButtonComponent from '../components/show-more-button/index';
-import NoCardComponent from '../components/no-card/index';
-import PosterComponent from '../components/poster-container/index';
-import SortComponent from '../components/sort/index';
+import ButtonComponent from '../components/show-more-button/ShowMoreButton';
+import NoCardComponent from '../components/no-card/NoCard';
+import PosterComponent from '../components/poster-container/PosterContainer';
+import SortComponent from '../components/sort/Sort';
 import {SortType} from '../components/sort/template';
-import TopListComponent from '../components/top-list/index';
+import TopListComponent from '../components/top-list/TopList';
 import {render, RenderPosition, remove} from '../utils/render';
 import {rubricsForTop} from '../mocks/consts';
 import {getConditionFilms} from '../utils/common';
@@ -27,7 +27,7 @@ export const renderCards = (filmsListElement, cards, onDataChange, onViewChange)
 const createFilmContainers = (place, count) => {
   new Array(count)
     .fill(``)
-    .forEach((it, i) => {
+    .forEach((_, i) => {
       render(place, new TopListComponent(rubricsForTop[i]), RenderPosition.BEFOREEND);
     });
 };
@@ -35,20 +35,20 @@ const createFilmContainers = (place, count) => {
 const renderTopListFilms = (container, cards, onDataChange, onViewChange, filteredCards) => {
   const ratedContainerElements = container.querySelectorAll(`section.films-list--extra > .films-list__container`);
 
-  Array.from(ratedContainerElements).forEach((it) => {
+  Array.from(ratedContainerElements).forEach((element) => {
 
-    switch (it.previousElementSibling.firstChild.data) {
+    switch (element.previousElementSibling.firstChild.data) {
       case `Top rated`:
         const ratedCards = getConditionFilms(cards, FILM_POPULAR, `total_rating`);
 
-        const topControllers = renderCards(it, ratedCards, onDataChange, onViewChange);
-        topControllers.forEach((controller) => filteredCards.push(controller))
+        const topControllers = renderCards(element, ratedCards, onDataChange, onViewChange);
+        topControllers.forEach((controller) => filteredCards.push(controller));
         break;
       case `Most commented`:
         const commentedCards = getConditionFilms(cards, FILM_POPULAR, `comments`);
 
-        const commentControllers = renderCards(it, commentedCards, onDataChange, onViewChange);
-        commentControllers.forEach((controller) => filteredCards.push(controller))
+        const commentControllers = renderCards(element, commentedCards, onDataChange, onViewChange);
+        commentControllers.forEach((controller) => filteredCards.push(controller));
         break;
     }
   });
@@ -189,11 +189,13 @@ export default class PageController {
     this._removeCards();
     this._renderCards(this._moviesModel.getCards().slice(0, count));
     this._renderLoadMoreButton();
+
+    this._updateTopListFilms(this._moviesModel.getCards());
   }
 
   _updateTopListFilms(model) {
-    this._container.getElement().querySelectorAll(`.films-list--extra .film-card`).forEach((it) => {
-      it.remove();
+    this._container.getElement().querySelectorAll(`.films-list--extra .film-card`).forEach((container) => {
+      container.remove();
     });
     const container = this._container.getElement();
     renderTopListFilms(container, model, this._onDataChange, this._onViewChange, this._filteredCards);
@@ -202,7 +204,7 @@ export default class PageController {
   _onDataChange(movieController, oldData, newData) {
     if (newData === null) {
       const card = oldData;
-      const index = oldData.comments.findIndex((it) => it.id === movieController._deleteElement);
+      const index = oldData.comments.findIndex((comment) => comment.id === movieController._deleteElement);
       const newComments = card.comments.filter((_, i) => i !== index);
       const oldId = card.comments[index].id;
 
@@ -265,10 +267,10 @@ export default class PageController {
   }
 
   _onViewChange() {
-    this._showedCardControllers.forEach((it) => it.setDefaultView());
+    this._showedCardControllers.forEach((controller) => controller.setDefaultView());
 
     if (this._filteredCards) {
-      this._filteredCards.forEach((it) => it.setDefaultView());
+      this._filteredCards.forEach((controller) => controller.setDefaultView());
     }
   }
 

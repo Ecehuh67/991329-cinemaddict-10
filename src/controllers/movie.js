@@ -1,5 +1,5 @@
-import PopupComponent from '../components/film-detail/index';
-import CardComponent from '../components/card/index';
+import PopupComponent from '../components/film-detail/FilmDetail';
+import CardComponent from '../components/card/Card';
 import MovieModel from '../models/movie';
 import {render, RenderPosition, remove, replace} from '../utils/render';
 

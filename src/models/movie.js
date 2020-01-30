@@ -33,8 +33,8 @@ export default class Movie {
     });
   }
 
-  _convertComments(data) {
-    return data.map((it) => it.id);
+  _convertComments(comments) {
+    return comments.map((comment) => comment.id);
   }
 
   static parseCard(data) {

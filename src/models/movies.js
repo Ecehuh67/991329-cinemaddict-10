@@ -28,7 +28,7 @@ export default class Movies {
   }
 
   removeCard(id) {
-    const index = this._cards.findIndex((it) => it.id === id);
+    const index = this._cards.findIndex((card) => card.id === id);
 
     if (index === -1) {
       return false;
@@ -42,7 +42,7 @@ export default class Movies {
   }
 
   updateCard(id, card) {
-    const index = this._cards.findIndex((it) => it.id === id);
+    const index = this._cards.findIndex((film) => film.id === id);
 
     if (index === -1) {
       return false;

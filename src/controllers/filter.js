@@ -1,4 +1,4 @@
-import FilterComponent from '../components/filters/index';
+import FilterComponent from '../components/filters/Filters';
 import {Filters} from '../mocks/consts';
 import {getCardsByFilter} from '../mocks/filter';
 import {render, RenderPosition, replace} from '../utils/render';

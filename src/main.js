@@ -1,10 +1,10 @@
-import RankComponent from './components/user-rank/index';
-import {MenuItem} from './components/filters/index';
-import ContainerComponent from './components/film-container/index';
+import RankComponent from './components/user-rank/UserRank';
+import {MenuItem} from './components/filters/Filters';
+import ContainerComponent from './components/film-container/FilmContainer';
 import PageController from './controllers/page';
 import FilterController from './controllers/filter';
 import MoviesModel from './models/movies';
-import StatisticsComponent from './components/statistics/index';
+import StatisticsComponent from './components/statistics/Statistics';
 import API from './api.js';
 import {getRandomNumber, getRank} from './utils/common';
 import {render, RenderPosition, replaceSort} from './utils/render';
