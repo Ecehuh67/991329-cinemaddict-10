@@ -1,8 +1,5 @@
 import {formateDateForComments} from '../../utils/common';
 
-
-
-
 export const createCommentsMarkup = (comments, buttonName, idElement) => {
 
   let buttonValue = `Delete`;

@@ -71,6 +71,7 @@ export default class Statistics extends AbstractSmartComponent {
             if (card.userDetails.watching_date) {
               return (this._date - UnixTime.DAY) < Date.parse(card.userDetails.watching_date);
             }
+            return false;
           });
 
           this._resetChart();
@@ -82,6 +83,7 @@ export default class Statistics extends AbstractSmartComponent {
             if (card.userDetails.watching_date) {
               return (this._date - UnixTime.WEEK) < Date.parse(card.userDetails.watching_date);
             }
+            return false;
           });
 
           this._resetChart();
@@ -93,6 +95,7 @@ export default class Statistics extends AbstractSmartComponent {
             if (card.userDetails.watching_date) {
               return (this._date - UnixTime.MONTH) < Date.parse(card.userDetails.watching_date);
             }
+            return false;
           });
 
           this._resetChart();
@@ -104,6 +107,7 @@ export default class Statistics extends AbstractSmartComponent {
             if (card.userDetails.watching_date) {
               return (this._date - UnixTime.YEAR) < Date.parse(card.userDetails.watching_date);
             }
+            return false;
           });
 
           this._resetChart();

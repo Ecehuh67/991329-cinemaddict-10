@@ -3,7 +3,7 @@ import MovieModel from './models/movie';
 const OK_SERVER_ANSWER = {
   'min': 200,
   'max': 300
-}
+};
 
 const Method = {
   GET: `GET`,
